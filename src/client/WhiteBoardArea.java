@@ -26,6 +26,7 @@ public class WhiteBoardArea extends JComponent {
 
     private Point startPoint, nextPoint;
     private Color currColor ;
+    private Color showColor ;
     private String currMode;
     private String text;
     private IRemoteServer server;
@@ -36,6 +37,7 @@ public class WhiteBoardArea extends JComponent {
         this.server = RemoteInterface;
         this.isManager = isManager;
         this.currColor = Color.black;
+//        this.showColor = Color.black;
         this.currMode = "draw"; // default mode
         this.text = "";
 
@@ -77,6 +79,7 @@ public class WhiteBoardArea extends JComponent {
                         try {
                             Message message = new Message("drawing", clientName, currMode, currColor, nextPoint, "");
                             server.broadcastBoard(message);
+                            System.out.println("color is  111 "+currColor);
 
                         } catch (RemoteException e1) {
                             e1.printStackTrace();
@@ -103,6 +106,11 @@ public class WhiteBoardArea extends JComponent {
                     }
                     // Display shapes when dragged by local clients, without sending to the server.
 
+                    graph_2.setPaint(currColor);
+
+
+
+
                     graph_2.draw(shape.getShape());
                     repaint();
                 }
@@ -121,36 +129,16 @@ public class WhiteBoardArea extends JComponent {
                 if (graph_2 != null) {
                     if (currMode.compareTo("line") == 0) {
                         shape.makeLine(startPoint, nextPoint);
-//                        try {
-//                            Message message = new Message("end drawing", clientName, currMode, currColor, nextPoint, "");
-//                            server.broadcastBoard(message);
-//                        } catch (RemoteException e1) {
-//                            e1.printStackTrace();
-//                        }
+
                     } else if (currMode.compareTo("rectangle") == 0) {
                         shape.makeRect(startPoint, nextPoint);
-//                        try {
-//                            Message message = new Message("end drawing", clientName, currMode, currColor, nextPoint, "");
-//                            server.broadcastBoard(message);
-//                        } catch (RemoteException e1) {
-//                            e1.printStackTrace();
-//                        }
+
                     } else if (currMode.compareTo("circle") == 0) {
                         shape.makeCircle(startPoint, nextPoint);
-//                        try {
-//                            Message message = new Message("end drawing", clientName, currMode, currColor, nextPoint, "");
-//                            server.broadcastBoard(message);
-//                        } catch (RemoteException e1) {
-//                            e1.printStackTrace();
-//                        }
+
                     } else if (currMode.compareTo("triangle") == 0) {
                         shape.makeTriangle(startPoint, nextPoint);
-//                        try {
-//                            Message message = new Message("end drawing", clientName, currMode, currColor, nextPoint, "");
-//                            server.broadcastBoard(message);
-//                        } catch (RemoteException e1) {
-//                            e1.printStackTrace();
-//                        }
+
                     } else if (currMode.compareTo("text") == 0) {
                         text = JOptionPane.showInputDialog("What text you want to add?");
                         if (text == null)
@@ -159,14 +147,9 @@ public class WhiteBoardArea extends JComponent {
                         graph_2.setFont(new Font("TimesRoman", Font.PLAIN, 20));
                         graph_2.drawString(text, nextPoint.x, nextPoint.y);
                         graph_2.setStroke(new BasicStroke(1.0f));
-//                        try {
-//                            Message message = new Message("end drawing", clientName, currMode, currColor, nextPoint, "");
-//                            server.broadcastBoard(message);
-//                        } catch (RemoteException e1) {
-//                            e1.printStackTrace();
-//                        }
+
                     }
-                        repaint();
+//                        repaint();
                         try {
                             Message message = new Message("end drawing", clientName, currMode, currColor, nextPoint, text);
                             server.broadcastBoard(message);
@@ -174,6 +157,15 @@ public class WhiteBoardArea extends JComponent {
                         } catch (RemoteException e1) {
                             System.out.println("End of drawing");
                         }
+
+
+
+                    graph_2.setPaint(currColor);
+
+
+
+
+                    repaint();
 //                    }
 
                 }

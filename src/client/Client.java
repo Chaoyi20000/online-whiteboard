@@ -214,7 +214,7 @@ public class Client extends UnicastRemoteObject implements IRemoteClient {
 
             //颜色需要修改，还不够
 
-            cur_Color = canvasUI.getCurrColor();
+//            cur_Color = canvasUI.getCurrColor();
             mode = canvasUI.gerCurrMode();
             if (e.getSource() == blackBtn || e.getSource() == blueBtn || e.getSource() == greenBtn || e.getSource() == redBtn
                     || e.getSource() == orangeBtn || e.getSource() == yellowBtn || e.getSource() == cyanBtn) {
