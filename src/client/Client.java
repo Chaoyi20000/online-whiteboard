@@ -971,10 +971,10 @@ public class Client extends UnicastRemoteObject implements IRemoteClient {
             //launch the White Board GUI and start drawing
             client.drawClientUI(server);
             //dont have permission access
-            if(!client.getPermission()) {
-                server.RemoveTargetUser(client.getClientName());
-
-            }
+//            if(!client.getPermission()) {
+//                server.RemoveTargetUser(client.getClientName());
+//
+//            }
         } catch(ConnectException e) {
             System.err.println("Server is down or wrong IP address or Port number.");
         } catch(Exception e) {

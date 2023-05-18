@@ -7,6 +7,7 @@ import remote_interface.IRemoteWhiteBoard;
 import java.io.IOException;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.Objects;
 import java.util.Set;
 
 //Servant receives requests from clients, processes them and sends back responses
@@ -143,8 +144,10 @@ public class RemoteBoardServant extends UnicastRemoteObject implements IRemoteSe
     public void RemoveTargetUser(String chosenUser) throws IOException {
         System.out.println("The user "+ chosenUser + "   is removed by server");
         for(IRemoteClient iterator: adm_client){
-            if(iterator.getClientName()==chosenUser){
+
+            if(Objects.equals(iterator.getClientName(), chosenUser)){
                 try {
+
                     adm_client.deleteClient(iterator);
                     iterator.closeUI();
 
