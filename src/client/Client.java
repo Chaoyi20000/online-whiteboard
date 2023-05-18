@@ -464,7 +464,8 @@ public class Client extends UnicastRemoteObject implements IRemoteClient {
         int height = 25; // 目标高度
         //绘画mode的button 不同icon
         LineBorder border = new LineBorder(Color.black, 2);
-        Icon icon = new ImageIcon("src/icon/pen_icon.png");
+        Icon icon = new ImageIcon("/Users/steven/Desktop/eclipse-workspace/WhiteBoard/src/icon/pen_icon.png");
+        System.out.println("icon test :" + icon.getIconHeight());
         Image image = ((ImageIcon) icon).getImage();
     // 调整图像大小
         Image scaledImage = image.getScaledInstance(width, height, Image.SCALE_SMOOTH);
@@ -477,7 +478,7 @@ public class Client extends UnicastRemoteObject implements IRemoteClient {
         drawBtn.addActionListener(actionListener);
         border = new LineBorder(new Color(238,238,238), 2);
 
-        icon = new ImageIcon("src/icon/straight_line.png");
+        icon = new ImageIcon("/Users/steven/Desktop/eclipse-workspace/WhiteBoard/src/icon/straight_line.png");
         image = ((ImageIcon) icon).getImage();
         scaledImage = image.getScaledInstance(width, height, Image.SCALE_SMOOTH);
         scaledIcon = new ImageIcon(scaledImage);
@@ -486,7 +487,7 @@ public class Client extends UnicastRemoteObject implements IRemoteClient {
         lineBtn.setBorder(border);
         lineBtn.addActionListener(actionListener);
 
-        icon = new ImageIcon("src/icon/rectangle.png");
+        icon = new ImageIcon("/Users/steven/Desktop/eclipse-workspace/WhiteBoard/src/icon/rectangle.png");
         image = ((ImageIcon) icon).getImage();
         scaledImage = image.getScaledInstance(width, height, Image.SCALE_SMOOTH);
         scaledIcon = new ImageIcon(scaledImage);
@@ -496,7 +497,7 @@ public class Client extends UnicastRemoteObject implements IRemoteClient {
         rectBtn.setBorder(border);
         rectBtn.addActionListener(actionListener);
 
-        icon = new ImageIcon("src/icon/circle.png");
+        icon = new ImageIcon("/Users/steven/Desktop/eclipse-workspace/WhiteBoard/src/icon/circle.png");
         image = ((ImageIcon) icon).getImage();
         scaledImage = image.getScaledInstance(width, height, Image.SCALE_SMOOTH);
         scaledIcon = new ImageIcon(scaledImage);
@@ -505,7 +506,7 @@ public class Client extends UnicastRemoteObject implements IRemoteClient {
         circleBtn.setBorder(border);
         circleBtn.addActionListener(actionListener);
 
-        icon = new ImageIcon("src/icon/triangle.png");
+        icon = new ImageIcon("/Users/steven/Desktop/eclipse-workspace/WhiteBoard/src/icon/triangle.png");
         image = ((ImageIcon) icon).getImage();
         scaledImage = image.getScaledInstance(width, height, Image.SCALE_SMOOTH);
         scaledIcon = new ImageIcon(scaledImage);
@@ -514,7 +515,7 @@ public class Client extends UnicastRemoteObject implements IRemoteClient {
         triangleBtn.setBorder(border);
         triangleBtn.addActionListener(actionListener);
 
-        icon = new ImageIcon("src/icon/text_box.png");
+        icon = new ImageIcon("/Users/steven/Desktop/eclipse-workspace/WhiteBoard/src/icon/text_box.png");
         image = ((ImageIcon) icon).getImage();
         scaledImage = image.getScaledInstance(width, height, Image.SCALE_SMOOTH);
         scaledIcon = new ImageIcon(scaledImage);
