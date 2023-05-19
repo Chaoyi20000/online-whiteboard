@@ -52,6 +52,10 @@ public class Client extends UnicastRemoteObject implements IRemoteClient{
     private ArrayList<JButton> btnList;
     private WhiteBoardArea canvasUI;
     private String mode;
+
+    private JTextField msgText;
+    private JButton sendBtn;
+    private JScrollPane currUsers;
     private String clientName; // store client's name
 //    private String picName; // if saveAs then keep on saving on that location
 //    private String picPath; // if saveAs then keep on saving on that location
@@ -504,7 +508,7 @@ public class Client extends UnicastRemoteObject implements IRemoteClient{
         //list all other user
 
         JList<String> list = new JList<>(userList);
-        JScrollPane currUsers = new JScrollPane(list);
+        currUsers = new JScrollPane(list);
         currUsers.setMinimumSize(new Dimension(100, 150));
         if(!isManager) {
             currUsers.setMinimumSize(new Dimension(100, 290));
@@ -564,8 +568,8 @@ public class Client extends UnicastRemoteObject implements IRemoteClient{
         chat = new JList<>(chatList);
         msgArea = new JScrollPane(chat);
         msgArea.setMinimumSize(new Dimension(100, 100));
-        JTextField msgText = new JTextField();
-        JButton sendBtn = new JButton("Send"); //addMouseListener here 直接call server 去broadcast message
+        msgText = new JTextField();
+        sendBtn = new JButton("Send"); //addMouseListener here 直接call server 去broadcast message
         sendBtn.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent evt) {
                 if(!msgText.getText().equals("")) {
@@ -585,129 +589,9 @@ public class Client extends UnicastRemoteObject implements IRemoteClient{
         });
 
 
+        LayoutManager layoutManager =new LayoutManager(content);
 
-        // layout
-        GroupLayout layout = new GroupLayout(content);
-        content.setLayout(layout);
-        layout.setAutoCreateGaps(true);
-        layout.setAutoCreateContainerGaps(true);
-//
-//
-//
-//        ////修改bug
-        layout.setHorizontalGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(CENTER)
-                        .addComponent(drawBtn)
-                        ///修改bug
-
-                        .addComponent(lineBtn)
-                        .addComponent(rectBtn)
-                        .addComponent(circleBtn)
-                        .addComponent(triangleBtn)
-                        .addComponent(textBtn)
-//                        .addComponent(eraserBtn)
-                )
-                .addGroup(layout.createParallelGroup(CENTER)
-                        .addComponent(canvasUI)
-                        .addComponent(msgArea)
-                        .addGroup(layout.createSequentialGroup()
-
-                                .addComponent(msgText)
-                                .addComponent(sendBtn)
-                        )
-                        .addGroup(layout.createSequentialGroup()
-                                .addComponent(blackBtn)
-                                .addComponent(yellowBtn)
-                                .addComponent(cyanBtn)
-                                .addComponent(brownBtn)
-                                .addComponent(greyBtn)
-                                .addComponent(purpleBtn)
-                                .addComponent(limeBtn)
-                                .addComponent(orangeBtn)
-
-
-                        )
-                        .addGroup(layout.createSequentialGroup()
-                                .addComponent(pinkBtn)
-                                .addComponent(redBtn)
-                                .addComponent(greenBtn)
-                                .addComponent(blueBtn)
-                                .addComponent(darkgreyBtn)
-                                .addComponent(magentaBtn)
-                                .addComponent(aoiBtn)
-                                .addComponent(skyBtn)
-                        )
-
-                )
-                .addGroup(layout.createParallelGroup(CENTER)
-                        .addComponent(clearBtn)
-                        .addComponent(openBtn)
-                        .addComponent(saveBtn)
-                        .addComponent(saveAsBtn)
-                        .addComponent(currUsers)
-                        .addComponent(tellColor)
-                        .addComponent(displayColor)
-                )
-        );
-
-        layout.setVerticalGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(BASELINE)
-                        .addGroup(layout.createSequentialGroup()
-                                .addComponent(drawBtn)
-                                .addComponent(lineBtn)
-                                .addComponent(rectBtn)
-                                .addComponent(circleBtn)
-                                .addComponent(triangleBtn)
-                                .addComponent(textBtn)
-                        )
-                        .addComponent(canvasUI)
-                        .addGroup(layout.createSequentialGroup()
-                                .addComponent(clearBtn)
-                                .addComponent(openBtn)
-                                .addComponent(saveBtn)
-                                .addComponent(saveAsBtn)
-                                .addComponent(currUsers)
-                                .addComponent(tellColor)
-                                .addComponent(displayColor)
-                        )
-                )
-                .addGroup(layout.createSequentialGroup()
-                        .addComponent(msgArea)
-                        .addGroup(layout.createParallelGroup()
-                                .addComponent(msgText)
-                                .addComponent(sendBtn)
-                        )
-                )
-                .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(BASELINE)
-                                .addComponent(blackBtn)
-                                .addComponent(yellowBtn)
-                                .addComponent(cyanBtn)
-                                .addComponent(brownBtn)
-                                .addComponent(greyBtn)
-                                .addComponent(purpleBtn)
-                                .addComponent(limeBtn)
-                                .addComponent(orangeBtn)
-
-                        )
-                        .addGroup(layout.createParallelGroup(BASELINE)
-
-                                .addComponent(pinkBtn)
-                                .addComponent(redBtn)
-                                .addComponent(greenBtn)
-                                .addComponent(blueBtn)
-                                .addComponent(darkgreyBtn)
-                                .addComponent(magentaBtn)
-                                .addComponent(aoiBtn)
-                                .addComponent(skyBtn)
-                        )
-                )
-        );
-        layout.linkSize(SwingConstants.HORIZONTAL, clearBtn, saveBtn, saveAsBtn, openBtn); //format to same size
-
-        // set the minimum framesize
-//        if (isManager) frame.setMinimumSize(new Dimension(820, 600));
-//        else frame.setMinimumSize(new Dimension(820, 600));
+        // set the minimum frame size
         frame.setMinimumSize(new Dimension(820, 600));
 
         frame.setLocationRelativeTo(null);
@@ -749,6 +633,132 @@ public class Client extends UnicastRemoteObject implements IRemoteClient{
                 }
             }
         });
+    }
+
+
+    public class LayoutManager {
+        private GroupLayout layout;
+
+        public LayoutManager(Container content) {
+            layout = new GroupLayout(content);
+            content.setLayout(layout);
+            layout.setAutoCreateGaps(true);
+            layout.setAutoCreateContainerGaps(true);
+
+            setHorizontalPart();
+            setVerticalPart();
+
+            layout.linkSize(SwingConstants.HORIZONTAL, clearBtn, saveBtn, saveAsBtn, openBtn);
+        }
+        public void setHorizontalPart() {
+            layout.setHorizontalGroup(layout.createSequentialGroup()
+                    .addGroup(layout.createParallelGroup(CENTER)
+                            .addComponent(drawBtn)
+                            .addComponent(lineBtn)
+                            .addComponent(rectBtn)
+                            .addComponent(circleBtn)
+                            .addComponent(triangleBtn)
+                            .addComponent(textBtn)
+                    )
+                    .addGroup(layout.createParallelGroup(CENTER)
+                            .addComponent(canvasUI)
+                            .addComponent(msgArea)
+                            .addGroup(layout.createSequentialGroup()
+
+                                    .addComponent(msgText)
+                                    .addComponent(sendBtn)
+                            )
+                            .addGroup(layout.createSequentialGroup()
+                                    .addComponent(blackBtn)
+                                    .addComponent(yellowBtn)
+                                    .addComponent(cyanBtn)
+                                    .addComponent(brownBtn)
+                                    .addComponent(greyBtn)
+                                    .addComponent(purpleBtn)
+                                    .addComponent(limeBtn)
+                                    .addComponent(orangeBtn)
+
+
+                            )
+                            .addGroup(layout.createSequentialGroup()
+                                    .addComponent(pinkBtn)
+                                    .addComponent(redBtn)
+                                    .addComponent(greenBtn)
+                                    .addComponent(blueBtn)
+                                    .addComponent(darkgreyBtn)
+                                    .addComponent(magentaBtn)
+                                    .addComponent(aoiBtn)
+                                    .addComponent(skyBtn)
+                            )
+
+                    )
+                    .addGroup(layout.createParallelGroup(CENTER)
+                            .addComponent(clearBtn)
+                            .addComponent(openBtn)
+                            .addComponent(saveBtn)
+                            .addComponent(saveAsBtn)
+                            .addComponent(currUsers)
+                            .addComponent(tellColor)
+                            .addComponent(displayColor)
+                    )
+            );
+        }
+
+        public void setVerticalPart(){
+            layout.setVerticalGroup(layout.createSequentialGroup()
+                    .addGroup(layout.createParallelGroup(BASELINE)
+                            .addGroup(layout.createSequentialGroup()
+                                    .addComponent(drawBtn)
+                                    .addComponent(lineBtn)
+                                    .addComponent(rectBtn)
+                                    .addComponent(circleBtn)
+                                    .addComponent(triangleBtn)
+                                    .addComponent(textBtn)
+                            )
+                            .addComponent(canvasUI)
+                            .addGroup(layout.createSequentialGroup()
+                                    .addComponent(clearBtn)
+                                    .addComponent(openBtn)
+                                    .addComponent(saveBtn)
+                                    .addComponent(saveAsBtn)
+                                    .addComponent(currUsers)
+                                    .addComponent(tellColor)
+                                    .addComponent(displayColor)
+                            )
+                    )
+                    .addGroup(layout.createSequentialGroup()
+                            .addComponent(msgArea)
+                            .addGroup(layout.createParallelGroup()
+                                    .addComponent(msgText)
+                                    .addComponent(sendBtn)
+                            )
+                    )
+                    .addGroup(layout.createSequentialGroup()
+                            .addGroup(layout.createParallelGroup(BASELINE)
+                                    .addComponent(blackBtn)
+                                    .addComponent(yellowBtn)
+                                    .addComponent(cyanBtn)
+                                    .addComponent(brownBtn)
+                                    .addComponent(greyBtn)
+                                    .addComponent(purpleBtn)
+                                    .addComponent(limeBtn)
+                                    .addComponent(orangeBtn)
+
+                            )
+                            .addGroup(layout.createParallelGroup(BASELINE)
+
+                                    .addComponent(pinkBtn)
+                                    .addComponent(redBtn)
+                                    .addComponent(greenBtn)
+                                    .addComponent(blueBtn)
+                                    .addComponent(darkgreyBtn)
+                                    .addComponent(magentaBtn)
+                                    .addComponent(aoiBtn)
+                                    .addComponent(skyBtn)
+                            )
+                    )
+            );
+        }
     }
 
     @Override
@@ -821,10 +831,6 @@ public class Client extends UnicastRemoteObject implements IRemoteClient{
             } else if (syncBoard.getMode().equals("text")) {
                 canvasUI.getGraphic().setFont(new Font("TimesRoman", Font.PLAIN, 16));
                 canvasUI.getGraphic().drawString(syncBoard.getText(), syncBoard.getPoint().x, syncBoard.getPoint().y);
-//                System.out.println("client name is "+clientName);
-//                System.out.println("Output " + (syncboard.getText()) +" " +(syncboard.getPoint().x)+ (syncboard.getPoint().y));
-
-//                canvasUI.repaint();
             }
 
 
