@@ -118,10 +118,6 @@ public class Client extends UnicastRemoteObject implements IRemoteClient{
                 //change color of canvas
             }
 
-
-            // 颜色操作板块按钮
-
-
             else if (e.getSource() == blackBtn) {
                 canvasUI.setColor(Color.black);
             } else if (e.getSource() == blueBtn) {
@@ -418,23 +414,6 @@ public class Client extends UnicastRemoteObject implements IRemoteClient{
         skyBtn = colorButton.ColorButton(new Color(0, 128, 255));
         skyBtn.addActionListener(actionListener);
 
-//        int width = 25;  // 目标宽度
-//        int height = 25; // 目标高度
-//        //绘画mode的button 不同icon
-//        LineBorder border = new LineBorder(Color.black, 2);
-//        Icon icon = new ImageIcon("/Users/steven/Desktop/eclipse-workspace/WhiteBoard/src/icon/pen_icon.png");
-//        System.out.println("icon test :" + icon.getIconHeight());
-//        Image image = ((ImageIcon) icon).getImage();
-//    // 调整图像大小
-//        Image scaledImage = image.getScaledInstance(width, height, Image.SCALE_SMOOTH);
-//    // 创建新的图标对象
-//        Icon scaledIcon = new ImageIcon(scaledImage);
-//        drawBtn = new JButton(scaledIcon);
-//        //可以换一下tips
-//        drawBtn.setToolTipText("Pencil draw");
-//        drawBtn.setBorder(border);
-//        drawBtn.addActionListener(actionListener);
-//        border = new LineBorder(new Color(238,238,238), 2);
 
         ToolButton tools = new ToolButton();
         IconAddress iconAddress = new IconAddress();
@@ -451,67 +430,17 @@ public class Client extends UnicastRemoteObject implements IRemoteClient{
         border = new LineBorder(new Color(238,238,238), 1);
 
         lineBtn = tools.toolButton(iconAddress.line_tool,"Draw a line",actionListener);
-//        lineBtn.addActionListener(actionListener);
         lineBtn.setBorder(border);
         rectBtn = tools.toolButton(iconAddress.rectangle_tool,"Draw a rectangle",actionListener);
-//        rectBtn.addActionListener(actionListener);
         rectBtn.setBorder(border);
         circleBtn = tools.toolButton(iconAddress.cicle_tool,"Draw a cycle",actionListener);
-//        circleBtn.addActionListener(actionListener);
         circleBtn.setBorder(border);
         triangleBtn = tools.toolButton(iconAddress.triangle_tool,"Draw a Triangle",actionListener);
-//        triangleBtn.addActionListener(actionListener);
         triangleBtn.setBorder(border);
         textBtn = tools.toolButton(iconAddress.text_tool,"Write in text box",actionListener);
-//        textBtn.addActionListener(actionListener);
         textBtn.setBorder(border);
 
 
-//        icon = new ImageIcon("/Users/steven/Desktop/eclipse-workspace/WhiteBoard/src/icon/straight_line.png");
-//        image = ((ImageIcon) icon).getImage();
-//        scaledImage = image.getScaledInstance(width, height, Image.SCALE_SMOOTH);
-//        scaledIcon = new ImageIcon(scaledImage);
-//        lineBtn = new JButton(scaledIcon);
-//        lineBtn.setToolTipText("Draw line");
-//        lineBtn.setBorder(border);
-//        lineBtn.addActionListener(actionListener);
-//
-//        icon = new ImageIcon("/Users/steven/Desktop/eclipse-workspace/WhiteBoard/src/icon/rectangle.png");
-//        image = ((ImageIcon) icon).getImage();
-//        scaledImage = image.getScaledInstance(width, height, Image.SCALE_SMOOTH);
-//        scaledIcon = new ImageIcon(scaledImage);
-//
-//        rectBtn = new JButton(scaledIcon);
-//        rectBtn.setToolTipText("Draw rectangle");
-//        rectBtn.setBorder(border);
-//        rectBtn.addActionListener(actionListener);
-//
-//        icon = new ImageIcon("/Users/steven/Desktop/eclipse-workspace/WhiteBoard/src/icon/circle.png");
-//        image = ((ImageIcon) icon).getImage();
-//        scaledImage = image.getScaledInstance(width, height, Image.SCALE_SMOOTH);
-//        scaledIcon = new ImageIcon(scaledImage);
-//        circleBtn = new JButton(scaledIcon);
-//        circleBtn.setToolTipText("Draw circle");
-//        circleBtn.setBorder(border);
-//        circleBtn.addActionListener(actionListener);
-//
-//        icon = new ImageIcon("/Users/steven/Desktop/eclipse-workspace/WhiteBoard/src/icon/triangle.png");
-//        image = ((ImageIcon) icon).getImage();
-//        scaledImage = image.getScaledInstance(width, height, Image.SCALE_SMOOTH);
-//        scaledIcon = new ImageIcon(scaledImage);
-//        triangleBtn = new JButton(scaledIcon);
-//        triangleBtn.setToolTipText("Draw triangle");
-//        triangleBtn.setBorder(border);
-//        triangleBtn.addActionListener(actionListener);
-//
-//        icon = new ImageIcon("/Users/steven/Desktop/eclipse-workspace/WhiteBoard/src/icon/text_box.png");
-//        image = ((ImageIcon) icon).getImage();
-//        scaledImage = image.getScaledInstance(width, height, Image.SCALE_SMOOTH);
-//        scaledIcon = new ImageIcon(scaledImage);
-//        textBtn = new JButton(scaledIcon);
-//        textBtn.setToolTipText("write in text box");
-//        textBtn.setBorder(border);
-//        textBtn.addActionListener(actionListener);
 
 
 
