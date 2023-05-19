@@ -53,17 +53,17 @@ public class Client extends UnicastRemoteObject implements IRemoteClient{
     private WhiteBoardArea canvasUI;
     private String mode;
     private String clientName; // store client's name
-    private String picName; // if saveAs then keep on saving on that location
-    private String picPath; // if saveAs then keep on saving on that location
+//    private String picName; // if saveAs then keep on saving on that location
+//    private String picPath; // if saveAs then keep on saving on that location
     private Color cur_Color;
     private Hashtable<String, Point> startPoints = new Hashtable<String, Point>();
 
 
     protected Client() throws RemoteException {
         //一个client包含的field
-        userList = new DefaultListModel<>();
         isManager = false;
         havePermission = true;
+        userList = new DefaultListModel<>();
         chatList = new DefaultListModel<>();
         btnList = new ArrayList<>();
     }
@@ -523,14 +523,13 @@ public class Client extends UnicastRemoteObject implements IRemoteClient{
                         try {
                             //manager can't remove him/herself
                             if(! getClientName().equals(selectedName)) {
-                                int dialogResult = JOptionPane.showConfirmDialog (frame, "Are you sure to remove " + selectedName + "?",
+                                int dialogResult = JOptionPane.showConfirmDialog (frame, "Do you want to kick  " + selectedName +  " off ?",
                                         "Warning", JOptionPane.YES_NO_OPTION);
                                 if(dialogResult == JOptionPane.YES_OPTION) {
                                     try {
                                         ///////////////////bug
                                         server.RemoveTargetUser(selectedName);
                                         System.out.println("remove select user" + selectedName);
-//                                        updateClientList(server.getClientList());
                                         updateClientList(server.getClientList());
 //                                        System.out.println(server.getClientList());
                                     } catch (IOException e) {
@@ -707,8 +706,9 @@ public class Client extends UnicastRemoteObject implements IRemoteClient{
         layout.linkSize(SwingConstants.HORIZONTAL, clearBtn, saveBtn, saveAsBtn, openBtn); //format to same size
 
         // set the minimum framesize
-        if (isManager) frame.setMinimumSize(new Dimension(820, 600));
-        else frame.setMinimumSize(new Dimension(820, 600));
+//        if (isManager) frame.setMinimumSize(new Dimension(820, 600));
+//        else frame.setMinimumSize(new Dimension(820, 600));
+        frame.setMinimumSize(new Dimension(820, 600));
 
         frame.setLocationRelativeTo(null);
         frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
@@ -758,6 +758,7 @@ public class Client extends UnicastRemoteObject implements IRemoteClient{
         for(IRemoteClient c: clientSet) {
             try {
                 userList.addElement(c.getClientName());
+                System.out.println("The new client is :");
                 System.out.println(c.getClientName());
             } catch (RemoteException e) {
                 // TODO Auto-generated catch block

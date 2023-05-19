@@ -154,10 +154,11 @@ public class RemoteBoardServant extends UnicastRemoteObject implements IRemoteSe
                 }catch (Exception e){
                     e.printStackTrace();
                 }
-//                adm_client.deleteClient(iterator);
-//                iterator.closeUI();
             }
+        }for(IRemoteClient iterator: adm_client){
+            iterator.updateClientList(getClientList());
         }
+
 
 
     }
