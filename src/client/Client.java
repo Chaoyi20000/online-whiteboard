@@ -42,8 +42,9 @@ public class Client extends UnicastRemoteObject implements IRemoteClient{
     private JFrame frame;
     private DefaultListModel<String> userList;
     private DefaultListModel<String> chatList;
-    private JButton clearBtn, saveBtn, saveAsBtn, openBtn, blackBtn, blueBtn, greenBtn, redBtn, orangeBtn, yellowBtn, cyanBtn;
-    private JButton brownBtn, pinkBtn, greyBtn, purpleBtn, limeBtn, darkgreyBtn, magentaBtn, aoiBtn, skyBtn;
+    private JButton clearBtn, saveBtn, saveAsBtn, openBtn;
+    private JButton blackBtn, blueBtn, greenBtn, redBtn, orangeBtn, yellowBtn, cyanBtn,aoiBtn;
+    private JButton brownBtn, pinkBtn,skyBtn, greyBtn, purpleBtn, limeBtn, darkgreyBtn, magentaBtn;
     private JButton drawBtn, lineBtn, rectBtn, circleBtn, triangleBtn, textBtn;
     private JScrollPane msgArea;
     private JTextArea tellColor, displayColor;
@@ -216,8 +217,12 @@ public class Client extends UnicastRemoteObject implements IRemoteClient{
 
 //            cur_Color = canvasUI.getCurrColor();
             mode = canvasUI.gerCurrMode();
-            if (e.getSource() == blackBtn || e.getSource() == blueBtn || e.getSource() == greenBtn || e.getSource() == redBtn
-                    || e.getSource() == orangeBtn || e.getSource() == yellowBtn || e.getSource() == cyanBtn) {
+            if (e.getSource() == blackBtn || e.getSource() == blueBtn || e.getSource() == greenBtn ||
+                    e.getSource() == redBtn || e.getSource() == orangeBtn || e.getSource() == yellowBtn ||
+                    e.getSource() == cyanBtn || e.getSource() == aoiBtn || e.getSource() == brownBtn ||
+                    e.getSource() == pinkBtn || e.getSource() == skyBtn || e.getSource() == greyBtn ||
+                    e.getSource() == purpleBtn || e.getSource() == limeBtn || e.getSource() == darkgreyBtn ||
+                    e.getSource() == magentaBtn) {
                 cur_Color = canvasUI.getCurrColor();
                 LineBorder border1 = new LineBorder(cur_Color, 1);
                 displayColor.setBackground(canvasUI.getCurrColor());
