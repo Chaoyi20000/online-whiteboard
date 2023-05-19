@@ -149,7 +149,7 @@ public class RemoteBoardServant extends UnicastRemoteObject implements IRemoteSe
                 try {
 
                     adm_client.deleteClient(iterator);
-                    iterator.closeUI();
+                    iterator.closeUI_Client();
 
                 }catch (Exception e){
                     e.printStackTrace();
@@ -168,7 +168,7 @@ public class RemoteBoardServant extends UnicastRemoteObject implements IRemoteSe
         System.out.println("The administrator terminate the Board");
         for(IRemoteClient iterator: adm_client) {
             adm_client.deleteClient(iterator);
-            iterator.closeUI();
+            iterator.closeUIbyManager();
         }
 
     }

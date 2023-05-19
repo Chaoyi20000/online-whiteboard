@@ -327,7 +327,7 @@ public class Client extends UnicastRemoteObject implements IRemoteClient{
     }
 
     @Override
-    public void closeUI() throws IOException {
+    public void closeUI_Client() throws IOException {
         //if manager does not give permission
         if (!this.havePermission) {
             Thread t = new Thread(new Runnable() {
@@ -343,8 +343,21 @@ public class Client extends UnicastRemoteObject implements IRemoteClient{
         //if kicked out or manager quit
         Thread t = new Thread(new Runnable() {
             public void run() {
-                JOptionPane.showMessageDialog(frame, "The manager has quit.\n or you have been removed.\n" +
-                                "Your application will be closed.",
+                JOptionPane.showMessageDialog(frame, "you have been removed by the Administrator.\n" +
+                                "The board will be closed.",
+                        "Error", JOptionPane.ERROR_MESSAGE);
+                System.exit(0);
+            }
+        });
+        t.start();
+    }
+
+    public void closeUIbyManager() throws IOException {
+        //if kicked out or manager quit
+        Thread t = new Thread(new Runnable() {
+            public void run() {
+                JOptionPane.showMessageDialog(frame, "The manager has shut down the server.\n" +
+                                "The board will be closed.",
                         "Error", JOptionPane.ERROR_MESSAGE);
                 System.exit(0);
             }

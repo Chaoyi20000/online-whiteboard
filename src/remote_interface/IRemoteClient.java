@@ -48,7 +48,8 @@ public interface IRemoteClient extends Remote {
     public boolean getPermission() throws IOException;
 
 // shutdown UI
-    public void closeUI() throws IOException;
+    public void closeUI_Client() throws IOException;
+    public void closeUIbyManager() throws IOException;
 
 
 

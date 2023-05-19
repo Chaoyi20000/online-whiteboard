@@ -57,17 +57,14 @@ public class AdvancedFeature {
 
             //bug 修改
             board.drawImage(image);
-            System.out.println("read image error333");
             //把image变成byte 然后发送出去给each user
             ByteArrayOutputStream imageArray = new ByteArrayOutputStream();
             //write the image to the imageArray
             ImageIO.write(image, "png", imageArray);
-            System.out.println("read image error3。5。。。");
             server.sendOpenBoard(imageArray.toByteArray());
-            System.out.println("read image error444");
 
         }else{
-            System.out.println("Board is null. Cannot draw image.");
+            System.out.println("Board is empty. Cannot draw image.");
         }
     }
 
@@ -75,7 +72,7 @@ public class AdvancedFeature {
 
     public void save() throws IOException {
         if(file_name == null) {
-            JOptionPane.showMessageDialog(null, "Please saveAs png file first.");
+            JOptionPane.showMessageDialog(null, "Please saveAs file in PNG type first.");
         }
         else {
             ImageIO.write(board.getCanvas(), "png", new File(file_Path + file_name));
