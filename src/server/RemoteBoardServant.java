@@ -51,24 +51,24 @@ public class RemoteBoardServant extends UnicastRemoteObject implements IRemoteSe
                 }
             }
         }
-        try{
-            client.setPermission(false);
-        }catch (IOException e) {
-            System.out.println("Error about I/O: " + e.getMessage());
-        }
-
-//        if(permission == false){
-//            try{
-//                client.setPermission(false);
-//            } catch (IOException e) {
-//                //改写这里error handle
-//                System.out.println("Error about I/O: " + e.getMessage());
-//            }
+//        try{
+//            client.setPermission(false);
+//        }catch (IOException e) {
+//            System.out.println("Error about I/O: " + e.getMessage());
 //        }
+
+        if(!permission ){
+            try{
+                client.setPermission(permission);
+            } catch (IOException e) {
+                //改写这里error handle
+                System.out.println("Error about I/O: " + e.getMessage());
+            }
+        }
 
         // manager with @ symbol
         if(client.getManager()){
-            client.setClientName("@" + client.getClientName());
+            client.setClientName("$" + client.getClientName());
         }
         //add each client to client manager
         adm_client.addClient(client);
@@ -130,7 +130,9 @@ public class RemoteBoardServant extends UnicastRemoteObject implements IRemoteSe
     @Override
     public void RemoveSelf(String name) throws RemoteException {
         for(IRemoteClient iterator: adm_client){
-            if(iterator.getClientName()==name){
+            System.out.println("iterator is : each user");
+
+            if(Objects.equals(iterator.getClientName(), name)){
                 adm_client.deleteClient(iterator);
                 System.out.println("The user " + name +" leave the board" );
             }

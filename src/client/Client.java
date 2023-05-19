@@ -67,6 +67,9 @@ public class Client extends UnicastRemoteObject implements IRemoteClient {
     }
 
 
+
+
+
     //看鼠标拿到了什么action
     // 监听鼠标上操作
 
@@ -830,34 +833,34 @@ public class Client extends UnicastRemoteObject implements IRemoteClient {
     //比较复杂，用来同步画板地操作
 
     //get the info sent from the other clients, and update the white board accordingly
-    public void synchronizeBoard(IRemoteWhiteBoard syncboard) throws RemoteException {
+    public void synchronizeBoard(IRemoteWhiteBoard syncBoard) throws RemoteException {
 
         // skip syncboard from itself
-        if (syncboard.getName().compareTo(clientName) == 0) {
+        if (syncBoard.getName().compareTo(clientName) == 0) {
             return ;
         }
 
         Mode_Shape mode_shape = new Mode_Shape();
 
 
-        if (syncboard.getState().equals("To start")) {
+        if (syncBoard.getState().equals("To start")) {
             //Let startPoint stores the start point of client x and wait for the next draw action
-            startPoints.put(syncboard.getName(), syncboard.getPoint());
+            startPoints.put(syncBoard.getName(), syncBoard.getPoint());
             return;
         }
 
         //start from the start point of client x
-        Point startPt = (Point)startPoints.get(syncboard.getName());
+        Point startPt = (Point)startPoints.get(syncBoard.getName());
 
         //set canvas stroke color
-        canvasUI.getGraphic().setPaint(syncboard.getColor());
+        canvasUI.getGraphic().setPaint(syncBoard.getColor());
         cur_Color = canvasUI.getCurrColor();
 
 
 
-        if (syncboard.getState().equals("drawing")) {
-            mode_shape.makeLine(startPt, syncboard.getPoint());
-            startPoints.put(syncboard.getName(), syncboard.getPoint());
+        if (syncBoard.getState().equals("drawing")) {
+            mode_shape.makeLine(startPt, syncBoard.getPoint());
+            startPoints.put(syncBoard.getName(), syncBoard.getPoint());
             canvasUI.getGraphic().draw(mode_shape.getShape());
             canvasUI.repaint();
             canvasUI.getGraphic().setPaint(cur_Color);
@@ -867,19 +870,19 @@ public class Client extends UnicastRemoteObject implements IRemoteClient {
 
 //        the mouse is released so we draw from start point to the broadcast point
 
-        if (syncboard.getState().equals("end drawing")) {
-            if (syncboard.getMode().equals("draw") || syncboard.getMode().equals("line")) {
-                mode_shape.makeLine(startPt, syncboard.getPoint());
+        if (syncBoard.getState().equals("end drawing")) {
+            if (syncBoard.getMode().equals("draw") || syncBoard.getMode().equals("line")) {
+                mode_shape.makeLine(startPt, syncBoard.getPoint());
                 System.out.println("sync successful on draw");
-            } else if (syncboard.getMode().equals("rectangle")) {
-                mode_shape.makeRect(startPt, syncboard.getPoint());
-            } else if (syncboard.getMode().equals("circle")) {
-                mode_shape.makeCircle(startPt, syncboard.getPoint());
-            }  else if (syncboard.getMode().equals("triangle")) {
-                mode_shape.makeTriangle(startPt, syncboard.getPoint());
-            } else if (syncboard.getMode().equals("text")) {
+            } else if (syncBoard.getMode().equals("rectangle")) {
+                mode_shape.makeRect(startPt, syncBoard.getPoint());
+            } else if (syncBoard.getMode().equals("circle")) {
+                mode_shape.makeCircle(startPt, syncBoard.getPoint());
+            }  else if (syncBoard.getMode().equals("triangle")) {
+                mode_shape.makeTriangle(startPt, syncBoard.getPoint());
+            } else if (syncBoard.getMode().equals("text")) {
                 canvasUI.getGraphic().setFont(new Font("TimesRoman", Font.PLAIN, 16));
-                canvasUI.getGraphic().drawString(syncboard.getText(), syncboard.getPoint().x, syncboard.getPoint().y);
+                canvasUI.getGraphic().drawString(syncBoard.getText(), syncBoard.getPoint().x, syncBoard.getPoint().y);
 //                System.out.println("client name is "+clientName);
 //                System.out.println("Output " + (syncboard.getText()) +" " +(syncboard.getPoint().x)+ (syncboard.getPoint().y));
 
@@ -891,19 +894,19 @@ public class Client extends UnicastRemoteObject implements IRemoteClient {
 
 
 //            //draw shape if in shape mode: triangle, circle, rectangle
-            if (!syncboard.getMode().equals("text")) {
+            if (!syncBoard.getMode().equals("text")) {
                 try {
                     canvasUI.getGraphic().draw(mode_shape.getShape());
                     canvasUI.repaint();
                     //once finished drawing remove the start point of client x
-                    startPoints.remove(syncboard.getName());
+                    startPoints.remove(syncBoard.getName());
                     return;
                 }catch(Exception e) {
                     e.printStackTrace();
                 }
             }
             canvasUI.repaint();
-            startPoints.remove(syncboard.getName());
+            startPoints.remove(syncBoard.getName());
 
         }
     }
@@ -968,13 +971,14 @@ public class Client extends UnicastRemoteObject implements IRemoteClient {
                 System.err.println("Error registering with remote server");
             }
 
-            //launch the White Board GUI and start drawing
+
+
             client.drawClientUI(server);
             //dont have permission access
-//            if(!client.getPermission()) {
-//                server.RemoveTargetUser(client.getClientName());
-//
-//            }
+            System.out.println("permission is " + client.getPermission());
+            if(!(client.getPermission())) {
+                server.RemoveTargetUser(client.getClientName());
+            }
         } catch(ConnectException e) {
             System.err.println("Server is down or wrong IP address or Port number.");
         } catch(Exception e) {

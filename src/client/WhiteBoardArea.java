@@ -26,7 +26,6 @@ public class WhiteBoardArea extends JComponent {
 
     private Point startPoint, nextPoint;
     private Color currColor ;
-    private Color showColor ;
     private String currMode;
     private String text;
     private IRemoteServer server;
@@ -79,7 +78,7 @@ public class WhiteBoardArea extends JComponent {
                         try {
                             Message message = new Message("drawing", clientName, currMode, currColor, nextPoint, "");
                             server.broadcastBoard(message);
-                            System.out.println("color is  111 "+currColor);
+//                            System.out.println("color is  111 "+currColor);
 
                         } catch (RemoteException e1) {
                             e1.printStackTrace();
