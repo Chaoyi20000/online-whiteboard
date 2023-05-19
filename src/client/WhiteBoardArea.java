@@ -36,7 +36,6 @@ public class WhiteBoardArea extends JComponent {
         this.server = RemoteInterface;
         this.isManager = isManager;
         this.currColor = Color.black;
-//        this.showColor = Color.black;
         this.currMode = "draw"; // default mode
         this.text = "";
 

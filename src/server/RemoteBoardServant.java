@@ -31,10 +31,12 @@ public class RemoteBoardServant extends UnicastRemoteObject implements IRemoteSe
 // server 用来广播 client 的话
     public RemoteBoardServant() throws RemoteException{
         this.adm_client =  new ClientManager(this);
+
     }
 
     @Override
     public void register(IRemoteClient client) throws RemoteException {
+//        Permission permissions = new Permission();
          // first join user is client manager
         if(this.adm_client.isEmpty()){
             client.assignClientManager();
@@ -51,11 +53,7 @@ public class RemoteBoardServant extends UnicastRemoteObject implements IRemoteSe
                 }
             }
         }
-//        try{
-//            client.setPermission(false);
-//        }catch (IOException e) {
-//            System.out.println("Error about I/O: " + e.getMessage());
-//        }
+
 
         if(!permission ){
             try{
@@ -130,7 +128,7 @@ public class RemoteBoardServant extends UnicastRemoteObject implements IRemoteSe
     @Override
     public void RemoveSelf(String name) throws RemoteException {
         for(IRemoteClient iterator: adm_client){
-            System.out.println("iterator is : each user");
+//            System.out.println("iterator is : each user");
 
             if(Objects.equals(iterator.getClientName(), name)){
                 adm_client.deleteClient(iterator);
@@ -161,7 +159,6 @@ public class RemoteBoardServant extends UnicastRemoteObject implements IRemoteSe
             }
         }
 
-        System.out.println("new client list is "+this.getClientList());
 
     }
 

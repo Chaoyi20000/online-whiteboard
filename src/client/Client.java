@@ -5,6 +5,7 @@ import remote_interface.IRemoteClient;
 import remote_interface.IRemoteServer;
 import remote_interface.IRemoteWhiteBoard;
 
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -33,7 +34,7 @@ import static javax.swing.GroupLayout.Alignment.BASELINE;
 import static javax.swing.GroupLayout.Alignment.CENTER;
 
 //要分区 除了白板以外的部分
-public class Client extends UnicastRemoteObject implements IRemoteClient {
+public class Client extends UnicastRemoteObject implements IRemoteClient{
     private static final long serialVersionUID = 1L;
     static IRemoteServer server;
     private boolean isManager; //true if is manager
@@ -79,8 +80,8 @@ public class Client extends UnicastRemoteObject implements IRemoteClient {
 
         public void actionPerformed(ActionEvent e) {
             // the chosen mode will be boxed with black border
-            LineBorder empty = new LineBorder(new Color(238, 238, 238), 2);
-            LineBorder box = new LineBorder(Color.black, 2);
+            LineBorder empty = new LineBorder(new Color(238, 238, 238), 1);
+            LineBorder box = new LineBorder(Color.black, 1);
             AdvancedFeature advancedFeature = new AdvancedFeature(frame, canvasUI,server);
 
 
@@ -222,7 +223,7 @@ public class Client extends UnicastRemoteObject implements IRemoteClient {
             if (e.getSource() == blackBtn || e.getSource() == blueBtn || e.getSource() == greenBtn || e.getSource() == redBtn
                     || e.getSource() == orangeBtn || e.getSource() == yellowBtn || e.getSource() == cyanBtn) {
                 cur_Color = canvasUI.getCurrColor();
-                LineBorder border1 = new LineBorder(cur_Color, 2);
+                LineBorder border1 = new LineBorder(cur_Color, 1);
                 displayColor.setBackground(canvasUI.getCurrColor());
                 switch (mode) {
                     case "draw":
@@ -360,6 +361,8 @@ public class Client extends UnicastRemoteObject implements IRemoteClient {
 //    //// 剩余部分是来写UI board 的部分
     public void drawClientUI(IRemoteServer server) {
 
+        ColorButton colorButton = new ColorButton();
+
         //build the GUI
         frame = new JFrame(clientName + "'s WhiteBoard");
         Container content = frame.getContentPane();
@@ -367,165 +370,148 @@ public class Client extends UnicastRemoteObject implements IRemoteClient {
         canvasUI = new WhiteBoardArea(clientName, isManager,server);
 
         //关于颜色的button
-        blackBtn = new JButton();
-        blackBtn.setBackground(Color.black);
-        blackBtn.setBorderPainted(false);
-        blackBtn.setOpaque(true);
+        blackBtn = colorButton.ColorButton(Color.black);
         blackBtn.addActionListener(actionListener);
 
-        blueBtn = new JButton();
-        blueBtn.setBackground(Color.blue);
-        blueBtn.setBorderPainted(false);
-        blueBtn.setOpaque(true);
+        blueBtn = colorButton.ColorButton(Color.blue);
         blueBtn.addActionListener(actionListener);
 
-        greenBtn = new JButton();
-        greenBtn.setBackground(Color.green);
-        greenBtn.setBorderPainted(false);
-        greenBtn.setOpaque(true);
+        greenBtn = colorButton.ColorButton(Color.green);
         greenBtn.addActionListener(actionListener);
 
-        redBtn = new JButton();
-        redBtn.setBackground(Color.red);
-        redBtn.setBorderPainted(false);
-        redBtn.setOpaque(true);
+        redBtn = colorButton.ColorButton(Color.red);
         redBtn.addActionListener(actionListener);
 
-        orangeBtn = new JButton();
-        orangeBtn.setBackground(Color.orange);
-        orangeBtn.setBorderPainted(false);
-        orangeBtn.setOpaque(true);
+        orangeBtn = colorButton.ColorButton(Color.orange);
         orangeBtn.addActionListener(actionListener);
 
-        yellowBtn = new JButton();
-        yellowBtn.setBackground(Color.yellow);
-        yellowBtn.setBorderPainted(false);
-        yellowBtn.setOpaque(true);
+        yellowBtn = colorButton.ColorButton(Color.yellow);
         yellowBtn.addActionListener(actionListener);
 
-        cyanBtn = new JButton();
-        cyanBtn.setBackground(Color.cyan);
-        cyanBtn.setBorderPainted(false);
-        cyanBtn.setOpaque(true);
+        cyanBtn = colorButton.ColorButton(Color.cyan);
         cyanBtn.addActionListener(actionListener);
 
-        brownBtn = new JButton();
-        brownBtn.setBackground(new Color(153,76,0));
-        brownBtn.setBorderPainted(false);
-        brownBtn.setOpaque(true);
+        brownBtn = colorButton.ColorButton(new Color(153, 76, 0));
         brownBtn.addActionListener(actionListener);
 
-        pinkBtn = new JButton();
-        pinkBtn.setBackground(new Color(255,153,204));
-        pinkBtn.setBorderPainted(false);
-        pinkBtn.setOpaque(true);
+        pinkBtn = colorButton.ColorButton(new Color(255, 153, 204));
         pinkBtn.addActionListener(actionListener);
 
-        greyBtn = new JButton();
-        greyBtn.setBackground(Color.gray);
-        greyBtn.setBorderPainted(false);
-        greyBtn.setOpaque(true);
+        greyBtn = colorButton.ColorButton(Color.gray);
         greyBtn.addActionListener(actionListener);
 
-        purpleBtn = new JButton();
-        purpleBtn.setBackground(new Color(102,0,204));
-        purpleBtn.setBorderPainted(false);
-        purpleBtn.setOpaque(true);
+        purpleBtn = colorButton.ColorButton(new Color(102, 0, 204));
         purpleBtn.addActionListener(actionListener);
 
-        limeBtn = new JButton();
-        limeBtn.setBackground(new Color(102,102,0));
-        limeBtn.setBorderPainted(false);
-        limeBtn.setOpaque(true);
+        limeBtn = colorButton.ColorButton(new Color(102, 102, 0));
         limeBtn.addActionListener(actionListener);
 
-        darkgreyBtn = new JButton();
-        darkgreyBtn.setBackground(Color.darkGray);
-        darkgreyBtn.setBorderPainted(false);
-        darkgreyBtn.setOpaque(true);
+        darkgreyBtn = colorButton.ColorButton(Color.darkGray);
         darkgreyBtn.addActionListener(actionListener);
 
-        magentaBtn = new JButton();
-        magentaBtn.setBackground(Color.magenta);
-        magentaBtn.setBorderPainted(false);
-        magentaBtn.setOpaque(true);
+        magentaBtn = colorButton.ColorButton(Color.magenta);
         magentaBtn.addActionListener(actionListener);
 
-        aoiBtn = new JButton();
-        aoiBtn.setBackground(new Color(0,102,102));
-        aoiBtn.setBorderPainted(false);
-        aoiBtn.setOpaque(true);
+        aoiBtn = colorButton.ColorButton(new Color(0, 102, 102));
         aoiBtn.addActionListener(actionListener);
 
-        skyBtn = new JButton();
-        skyBtn.setBackground(new Color(0,128,255));
-        skyBtn.setBorderPainted(false);
-        skyBtn.setOpaque(true);
+        skyBtn = colorButton.ColorButton(new Color(0, 128, 255));
         skyBtn.addActionListener(actionListener);
 
-        int width = 25;  // 目标宽度
-        int height = 25; // 目标高度
-        //绘画mode的button 不同icon
-        LineBorder border = new LineBorder(Color.black, 2);
-        Icon icon = new ImageIcon("/Users/steven/Desktop/eclipse-workspace/WhiteBoard/src/icon/pen_icon.png");
-        System.out.println("icon test :" + icon.getIconHeight());
-        Image image = ((ImageIcon) icon).getImage();
-    // 调整图像大小
-        Image scaledImage = image.getScaledInstance(width, height, Image.SCALE_SMOOTH);
-    // 创建新的图标对象
-        Icon scaledIcon = new ImageIcon(scaledImage);
-        drawBtn = new JButton(scaledIcon);
-        //可以换一下tips
-        drawBtn.setToolTipText("Pencil draw");
+//        int width = 25;  // 目标宽度
+//        int height = 25; // 目标高度
+//        //绘画mode的button 不同icon
+//        LineBorder border = new LineBorder(Color.black, 2);
+//        Icon icon = new ImageIcon("/Users/steven/Desktop/eclipse-workspace/WhiteBoard/src/icon/pen_icon.png");
+//        System.out.println("icon test :" + icon.getIconHeight());
+//        Image image = ((ImageIcon) icon).getImage();
+//    // 调整图像大小
+//        Image scaledImage = image.getScaledInstance(width, height, Image.SCALE_SMOOTH);
+//    // 创建新的图标对象
+//        Icon scaledIcon = new ImageIcon(scaledImage);
+//        drawBtn = new JButton(scaledIcon);
+//        //可以换一下tips
+//        drawBtn.setToolTipText("Pencil draw");
+//        drawBtn.setBorder(border);
+//        drawBtn.addActionListener(actionListener);
+//        border = new LineBorder(new Color(238,238,238), 2);
+
+        ToolButton tools = new ToolButton();
+        IconAddress iconAddress = new IconAddress();
+
+
+        //create six tools button
+        LineBorder border = new LineBorder(Color.black, 1);
+        drawBtn = tools.toolButton(iconAddress.pencil_tool, "Draw by pencil",actionListener);
+
+
         drawBtn.setBorder(border);
-        drawBtn.addActionListener(actionListener);
-        border = new LineBorder(new Color(238,238,238), 2);
 
-        icon = new ImageIcon("/Users/steven/Desktop/eclipse-workspace/WhiteBoard/src/icon/straight_line.png");
-        image = ((ImageIcon) icon).getImage();
-        scaledImage = image.getScaledInstance(width, height, Image.SCALE_SMOOTH);
-        scaledIcon = new ImageIcon(scaledImage);
-        lineBtn = new JButton(scaledIcon);
-        lineBtn.setToolTipText("Draw line");
+
+        border = new LineBorder(new Color(238,238,238), 1);
+
+        lineBtn = tools.toolButton(iconAddress.line_tool,"Draw a line",actionListener);
+//        lineBtn.addActionListener(actionListener);
         lineBtn.setBorder(border);
-        lineBtn.addActionListener(actionListener);
-
-        icon = new ImageIcon("/Users/steven/Desktop/eclipse-workspace/WhiteBoard/src/icon/rectangle.png");
-        image = ((ImageIcon) icon).getImage();
-        scaledImage = image.getScaledInstance(width, height, Image.SCALE_SMOOTH);
-        scaledIcon = new ImageIcon(scaledImage);
-
-        rectBtn = new JButton(scaledIcon);
-        rectBtn.setToolTipText("Draw rectangle");
+        rectBtn = tools.toolButton(iconAddress.rectangle_tool,"Draw a rectangle",actionListener);
+//        rectBtn.addActionListener(actionListener);
         rectBtn.setBorder(border);
-        rectBtn.addActionListener(actionListener);
-
-        icon = new ImageIcon("/Users/steven/Desktop/eclipse-workspace/WhiteBoard/src/icon/circle.png");
-        image = ((ImageIcon) icon).getImage();
-        scaledImage = image.getScaledInstance(width, height, Image.SCALE_SMOOTH);
-        scaledIcon = new ImageIcon(scaledImage);
-        circleBtn = new JButton(scaledIcon);
-        circleBtn.setToolTipText("Draw circle");
+        circleBtn = tools.toolButton(iconAddress.cicle_tool,"Draw a cycle",actionListener);
+//        circleBtn.addActionListener(actionListener);
         circleBtn.setBorder(border);
-        circleBtn.addActionListener(actionListener);
-
-        icon = new ImageIcon("/Users/steven/Desktop/eclipse-workspace/WhiteBoard/src/icon/triangle.png");
-        image = ((ImageIcon) icon).getImage();
-        scaledImage = image.getScaledInstance(width, height, Image.SCALE_SMOOTH);
-        scaledIcon = new ImageIcon(scaledImage);
-        triangleBtn = new JButton(scaledIcon);
-        triangleBtn.setToolTipText("Draw triangle");
+        triangleBtn = tools.toolButton(iconAddress.triangle_tool,"Draw a Triangle",actionListener);
+//        triangleBtn.addActionListener(actionListener);
         triangleBtn.setBorder(border);
-        triangleBtn.addActionListener(actionListener);
-
-        icon = new ImageIcon("/Users/steven/Desktop/eclipse-workspace/WhiteBoard/src/icon/text_box.png");
-        image = ((ImageIcon) icon).getImage();
-        scaledImage = image.getScaledInstance(width, height, Image.SCALE_SMOOTH);
-        scaledIcon = new ImageIcon(scaledImage);
-        textBtn = new JButton(scaledIcon);
-        textBtn.setToolTipText("write in text box");
+        textBtn = tools.toolButton(iconAddress.text_tool,"Write in text box",actionListener);
+//        textBtn.addActionListener(actionListener);
         textBtn.setBorder(border);
-        textBtn.addActionListener(actionListener);
+
+
+//        icon = new ImageIcon("/Users/steven/Desktop/eclipse-workspace/WhiteBoard/src/icon/straight_line.png");
+//        image = ((ImageIcon) icon).getImage();
+//        scaledImage = image.getScaledInstance(width, height, Image.SCALE_SMOOTH);
+//        scaledIcon = new ImageIcon(scaledImage);
+//        lineBtn = new JButton(scaledIcon);
+//        lineBtn.setToolTipText("Draw line");
+//        lineBtn.setBorder(border);
+//        lineBtn.addActionListener(actionListener);
+//
+//        icon = new ImageIcon("/Users/steven/Desktop/eclipse-workspace/WhiteBoard/src/icon/rectangle.png");
+//        image = ((ImageIcon) icon).getImage();
+//        scaledImage = image.getScaledInstance(width, height, Image.SCALE_SMOOTH);
+//        scaledIcon = new ImageIcon(scaledImage);
+//
+//        rectBtn = new JButton(scaledIcon);
+//        rectBtn.setToolTipText("Draw rectangle");
+//        rectBtn.setBorder(border);
+//        rectBtn.addActionListener(actionListener);
+//
+//        icon = new ImageIcon("/Users/steven/Desktop/eclipse-workspace/WhiteBoard/src/icon/circle.png");
+//        image = ((ImageIcon) icon).getImage();
+//        scaledImage = image.getScaledInstance(width, height, Image.SCALE_SMOOTH);
+//        scaledIcon = new ImageIcon(scaledImage);
+//        circleBtn = new JButton(scaledIcon);
+//        circleBtn.setToolTipText("Draw circle");
+//        circleBtn.setBorder(border);
+//        circleBtn.addActionListener(actionListener);
+//
+//        icon = new ImageIcon("/Users/steven/Desktop/eclipse-workspace/WhiteBoard/src/icon/triangle.png");
+//        image = ((ImageIcon) icon).getImage();
+//        scaledImage = image.getScaledInstance(width, height, Image.SCALE_SMOOTH);
+//        scaledIcon = new ImageIcon(scaledImage);
+//        triangleBtn = new JButton(scaledIcon);
+//        triangleBtn.setToolTipText("Draw triangle");
+//        triangleBtn.setBorder(border);
+//        triangleBtn.addActionListener(actionListener);
+//
+//        icon = new ImageIcon("/Users/steven/Desktop/eclipse-workspace/WhiteBoard/src/icon/text_box.png");
+//        image = ((ImageIcon) icon).getImage();
+//        scaledImage = image.getScaledInstance(width, height, Image.SCALE_SMOOTH);
+//        scaledIcon = new ImageIcon(scaledImage);
+//        textBtn = new JButton(scaledIcon);
+//        textBtn.setToolTipText("write in text box");
+//        textBtn.setBorder(border);
+//        textBtn.addActionListener(actionListener);
 
 
 
@@ -597,8 +583,9 @@ public class Client extends UnicastRemoteObject implements IRemoteClient {
                                         ///////////////////bug
                                         server.RemoveTargetUser(selectedName);
                                         System.out.println("remove select user" + selectedName);
+//                                        updateClientList(server.getClientList());
                                         updateClientList(server.getClientList());
-                                        System.out.println(server.getClientList());
+//                                        System.out.println(server.getClientList());
                                     } catch (IOException e) {
                                         // TODO Auto-generated catch block
                                         System.err.println("There is an IO error.");
@@ -616,6 +603,8 @@ public class Client extends UnicastRemoteObject implements IRemoteClient {
                 }
             });
         }
+
+
 
 
 
@@ -822,6 +811,7 @@ public class Client extends UnicastRemoteObject implements IRemoteClient {
         for(IRemoteClient c: clientSet) {
             try {
                 userList.addElement(c.getClientName());
+                System.out.println(c.getClientName());
             } catch (RemoteException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
@@ -914,6 +904,8 @@ public class Client extends UnicastRemoteObject implements IRemoteClient {
 
 
 
+
+
     //几种画画地mode实现 没写完
     //修改bug这里
 
@@ -945,6 +937,8 @@ public class Client extends UnicastRemoteObject implements IRemoteClient {
             //Look up the Canvas Server from the RMI name registry
             server = (IRemoteServer) Naming.lookup(serverAddress);
             IRemoteClient client = new Client();
+//            IClientManager clientManager =new ClientManager(this);
+
             //show user register GUI and register the user name to server
             boolean validName = false;
             String client_name = "";
@@ -971,11 +965,13 @@ public class Client extends UnicastRemoteObject implements IRemoteClient {
                 System.err.println("Error registering with remote server");
             }
 
+            //修改的。。。
+//            Permission permission = new Permission();
+
 
 
             client.drawClientUI(server);
             //dont have permission access
-            System.out.println("permission is " + client.getPermission());
             if(!(client.getPermission())) {
                 server.RemoveTargetUser(client.getClientName());
             }

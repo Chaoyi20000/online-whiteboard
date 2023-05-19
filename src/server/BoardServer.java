@@ -15,12 +15,11 @@ public class BoardServer {
         // with port number 8888 and used the name "WhiteBoard" as the object's identifier in the registry
         try{
             //server is skeleton object
-            System.out.println("123");
             IRemoteServer server = new RemoteBoardServant();
             //When a client needs to call a remote method, it can look up a reference to the remote object through the
             //Registry and use that reference to call the remote method.
             //crete a registry, then client use registry to access server
-            System.out.println("1234");
+//            System.out.println("1234");
             Registry registry = LocateRegistry.createRegistry(Integer.parseInt("8888")); // arg[0]
             registry.bind("WhiteBoard", server);
             System.out.println("The WhiteBoard server is ready to start!!!");

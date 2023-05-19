@@ -8,10 +8,11 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 
-public class ClientManager implements Iterable<IRemoteClient> {
+public class ClientManager implements Iterable<IRemoteClient>{
 
     private Set<IRemoteClient> clientSet;
     ConcurrentHashMap<IRemoteClient, Boolean> clientMap= new ConcurrentHashMap<>();
+    private boolean havePermission;
 
     // make the clientSet iterate
     @Override
@@ -43,6 +44,8 @@ public class ClientManager implements Iterable<IRemoteClient> {
     public void deleteClient (IRemoteClient currentClient){
         this.clientSet.remove(currentClient);
     }
+
+
 
 
 }
