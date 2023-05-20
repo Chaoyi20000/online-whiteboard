@@ -63,8 +63,6 @@ public class WhiteBoardArea extends JComponent {
 
 
         //listen to the mouse motion on the white board.
-        //Draw the shape: line/straight line/rectangle/ circle/oval/ eraser/text
-        //send the shape and its ,e.g. coordinates, color, mode, etc to the server. The server will synchronize the info to the other clients.
         addMouseMotionListener(new MouseMotionAdapter() {
             public void mouseDragged(MouseEvent e) {
                 //System.out.println(clientName + " is drawing");
@@ -86,6 +84,9 @@ public class WhiteBoardArea extends JComponent {
                     } else if (currMode.compareTo("line") == 0) {
                         draw_prev_image();
                         shape.makeLine(startPoint, nextPoint);
+                    } else if(currMode.compareTo("oval") == 0){
+                        draw_prev_image();
+                        shape.makeOval(startPoint, nextPoint);
                     } else if (currMode.compareTo("rectangle") == 0) {
                         draw_prev_image();
                         shape.makeRect(startPoint, nextPoint);
@@ -128,6 +129,9 @@ public class WhiteBoardArea extends JComponent {
                 if (graph_2 != null) {
                     if (currMode.compareTo("line") == 0) {
                         shape.makeLine(startPoint, nextPoint);
+
+                    } else if(currMode.compareTo("oval")==0){
+                        shape.makeOval(startPoint, nextPoint);
 
                     } else if (currMode.compareTo("rectangle") == 0) {
                         shape.makeRect(startPoint, nextPoint);
@@ -255,6 +259,9 @@ public class WhiteBoardArea extends JComponent {
 
     public void rect() {
         currMode="rectangle";
+    }
+    public void oval(){
+        currMode = "oval";
     }
 
     public void circle() {

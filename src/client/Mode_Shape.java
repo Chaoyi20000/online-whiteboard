@@ -23,6 +23,14 @@ public class Mode_Shape {
         shape = new Line2D.Double(start.x, start.y, end.x, end.y);
     }
 
+    public void makeOval(Point start, Point end){
+        int x = Math.min(start.x, end.x);
+        int y= Math.min(start.y, end.y);
+        int width = Math.abs(start.x - end.x);
+        int height = Math.abs(start.y - end.y);
+        shape = new Ellipse2D.Double(x, y, width, height);
+    }
+
 
     //draw Rectangle
     public void makeRect( Point start, Point end) {

@@ -45,7 +45,9 @@ public class Client extends UnicastRemoteObject implements IRemoteClient{
     private JButton clearBtn, saveBtn, saveAsBtn, openBtn;
     private JButton blackBtn, blueBtn, greenBtn, redBtn, orangeBtn, yellowBtn, cyanBtn,aoiBtn;
     private JButton brownBtn, pinkBtn,skyBtn, greyBtn, purpleBtn, limeBtn, darkgreyBtn, magentaBtn;
-    private JButton drawBtn, lineBtn, rectBtn, circleBtn, triangleBtn, textBtn;
+    private JButton drawBtn, lineBtn,ovalBtn, rectBtn, circleBtn, textBtn;
+
+    private JButton triangleBtn, eraserBtn,trapezoidBtn;
     private JScrollPane msgArea;
     private JTextArea tellColor, displayColor;
     private JList<String> chat;
@@ -177,7 +179,16 @@ public class Client extends UnicastRemoteObject implements IRemoteClient{
                         button.setBorder(empty);
                     }
                 }
-            } else if (e.getSource() == rectBtn) {
+            }else if(e.getSource()==ovalBtn){
+                canvasUI.oval();
+                for (JButton button : btnList) {
+                    if (button == ovalBtn) {
+                        button.setBorder(box);
+                    } else {
+                        button.setBorder(empty);
+                    }
+                }
+            }else if (e.getSource() == rectBtn) {
                 canvasUI.rect();
                 for (JButton button : btnList) {
                     if (button == rectBtn) {
@@ -227,27 +238,29 @@ public class Client extends UnicastRemoteObject implements IRemoteClient{
                     e.getSource() == pinkBtn || e.getSource() == skyBtn || e.getSource() == greyBtn ||
                     e.getSource() == purpleBtn || e.getSource() == limeBtn || e.getSource() == darkgreyBtn ||
                     e.getSource() == magentaBtn) {
-                cur_Color = canvasUI.getCurrColor();
-                LineBorder border1 = new LineBorder(cur_Color, 1);
                 displayColor.setBackground(canvasUI.getCurrColor());
+                LineBorder tool_border = new LineBorder(Color.black, 1);
                 switch (mode) {
                     case "draw":
-                        drawBtn.setBorder(border1);
+                        drawBtn.setBorder(tool_border);
                         break;
                     case "line":
-                        lineBtn.setBorder(border1);
+                        lineBtn.setBorder(tool_border);
+                        break;
+                    case "oval":
+                        ovalBtn.setBorder(tool_border);
                         break;
                     case "rectangle":
-                        rectBtn.setBorder(border1);
+                        rectBtn.setBorder(tool_border);
                         break;
                     case "circle":
-                        circleBtn.setBorder(border1);
+                        circleBtn.setBorder(tool_border);
                         break;
                     case "triangle":
-                        triangleBtn.setBorder(border1);
+                        triangleBtn.setBorder(tool_border);
                         break;
                     case "text":
-                        textBtn.setBorder(border1);
+                        textBtn.setBorder(tool_border);
                         break;
                     default :
                         break;
@@ -453,6 +466,8 @@ public class Client extends UnicastRemoteObject implements IRemoteClient{
 
         lineBtn = tools.toolButton(iconAddress.line_tool,"Draw a line",actionListener);
         lineBtn.setBorder(border);
+        ovalBtn = tools.toolButton(iconAddress.oval_tool,"Draw a oval",actionListener);
+        ovalBtn.setBorder(border);
         rectBtn = tools.toolButton(iconAddress.rectangle_tool,"Draw a rectangle",actionListener);
         rectBtn.setBorder(border);
         circleBtn = tools.toolButton(iconAddress.cicle_tool,"Draw a cycle",actionListener);
@@ -468,6 +483,7 @@ public class Client extends UnicastRemoteObject implements IRemoteClient{
 
         btnList.add(drawBtn);
         btnList.add(lineBtn);
+        btnList.add(ovalBtn);
         btnList.add(rectBtn);
         btnList.add(circleBtn);
         btnList.add(triangleBtn);
@@ -655,6 +671,7 @@ public class Client extends UnicastRemoteObject implements IRemoteClient{
                     .addGroup(layout.createParallelGroup(CENTER)
                             .addComponent(drawBtn)
                             .addComponent(lineBtn)
+                            .addComponent(ovalBtn)
                             .addComponent(rectBtn)
                             .addComponent(circleBtn)
                             .addComponent(triangleBtn)
@@ -710,6 +727,7 @@ public class Client extends UnicastRemoteObject implements IRemoteClient{
                             .addGroup(layout.createSequentialGroup()
                                     .addComponent(drawBtn)
                                     .addComponent(lineBtn)
+                                    .addComponent(ovalBtn)
                                     .addComponent(rectBtn)
                                     .addComponent(circleBtn)
                                     .addComponent(triangleBtn)
@@ -822,6 +840,8 @@ public class Client extends UnicastRemoteObject implements IRemoteClient{
             if (syncBoard.getMode().equals("draw") || syncBoard.getMode().equals("line")) {
                 mode_shape.makeLine(startPt, syncBoard.getPoint());
                 System.out.println("sync successful on draw");
+            }else if(syncBoard.getMode().equals("oval")){
+                mode_shape.makeOval(startPt, syncBoard.getPoint());
             } else if (syncBoard.getMode().equals("rectangle")) {
                 mode_shape.makeRect(startPt, syncBoard.getPoint());
             } else if (syncBoard.getMode().equals("circle")) {
