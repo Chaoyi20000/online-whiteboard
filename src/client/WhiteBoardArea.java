@@ -81,6 +81,19 @@ public class WhiteBoardArea extends JComponent {
                         } catch (RemoteException e1) {
                             e1.printStackTrace();
                         }
+                    }else if(currMode.compareTo("eraser") == 0){
+                        shape.makeLine(startPoint, nextPoint);
+                        startPoint = nextPoint;
+                        graph_2.setPaint(Color.white);
+                        graph_2.setStroke(new BasicStroke(10.0f));
+                        try {
+                            Message message = new Message("drawing", clientName, currMode, Color.white, nextPoint, "");
+                            server.broadcastBoard(message);
+
+                        } catch (RemoteException e1) {
+                            e1.printStackTrace();
+                        }
+
                     } else if (currMode.compareTo("line") == 0) {
                         draw_prev_image();
                         shape.makeLine(startPoint, nextPoint);
@@ -96,7 +109,7 @@ public class WhiteBoardArea extends JComponent {
                     } else if (currMode.compareTo("triangle") == 0) {
                         draw_prev_image();
                         shape.makeTriangle(startPoint, nextPoint);
-                    } else if (currMode.compareTo("text") == 0) {
+                    }else if (currMode.compareTo("text") == 0) {
                         draw_prev_image();
                         graph_2.setFont(new Font("TimesRoman", Font.PLAIN, 20));
                         graph_2.drawString("Enter text here", nextPoint.x, nextPoint.y);
@@ -106,7 +119,7 @@ public class WhiteBoardArea extends JComponent {
                     }
                     // Display shapes when dragged by local clients, without sending to the server.
 
-                    graph_2.setPaint(currColor);
+//                    graph_2.setPaint(currColor);
 
 
 
@@ -151,8 +164,18 @@ public class WhiteBoardArea extends JComponent {
                         graph_2.drawString(text, nextPoint.x, nextPoint.y);
                         graph_2.setStroke(new BasicStroke(1.0f));
 
-                    }
-//                        repaint();
+                    }if(currMode.compareTo("eraser")==0) {
+                        try {
+                            Message message = new Message("end drawing", clientName, currMode, Color.white, nextPoint, text);
+                            server.broadcastBoard(message);
+
+                        } catch (RemoteException e1) {
+                            e1.printStackTrace();
+                        }
+                        graph_2.setPaint(Color.white);
+                        graph_2.setStroke(new BasicStroke(1.0f));
+                        repaint();
+                    }else{
                         try {
                             Message message = new Message("end drawing", clientName, currMode, currColor, nextPoint, text);
                             server.broadcastBoard(message);
@@ -160,16 +183,11 @@ public class WhiteBoardArea extends JComponent {
                         } catch (RemoteException e1) {
                             System.out.println("End of drawing");
                         }
+                        graph_2.setPaint(currColor);
+                        repaint();
+                    }
 
 
-
-                    graph_2.setPaint(currColor);
-
-
-
-
-                    repaint();
-//                    }
 
                 }
             }
@@ -193,7 +211,7 @@ public class WhiteBoardArea extends JComponent {
                     graph_2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
                     graph_2.setPaint(currColor);
                 } catch (IOException e) {
-                    System.err.println("Fail receiving image!");
+                    System.err.println("Fail for receiving the image!");
                 }
             }
         }
@@ -239,6 +257,7 @@ public class WhiteBoardArea extends JComponent {
     }
 
 
+
     public void setFileName(String fileName){
         this.fileName=fileName;
     }
@@ -262,6 +281,10 @@ public class WhiteBoardArea extends JComponent {
     }
     public void oval(){
         currMode = "oval";
+    }
+
+    public void eraser(){
+        currMode = "eraser";
     }
 
     public void circle() {

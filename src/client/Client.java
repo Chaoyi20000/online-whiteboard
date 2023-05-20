@@ -224,6 +224,15 @@ public class Client extends UnicastRemoteObject implements IRemoteClient{
                         button.setBorder(empty);
                     }
                 }
+            }else if(e.getSource()==eraserBtn){
+                canvasUI.eraser();
+                for (JButton button : btnList) {
+                    if (button == eraserBtn) {
+                        button.setBorder(box);
+                    } else {
+                        button.setBorder(empty);
+                    }
+                }
             }
 
             // 如果我们换了颜色， 我们display current color也需要换掉
@@ -261,6 +270,9 @@ public class Client extends UnicastRemoteObject implements IRemoteClient{
                         break;
                     case "text":
                         textBtn.setBorder(tool_border);
+                        break;
+                    case "eraser":
+                        eraserBtn.setBorder(tool_border);
                         break;
                     default :
                         break;
@@ -476,6 +488,8 @@ public class Client extends UnicastRemoteObject implements IRemoteClient{
         triangleBtn.setBorder(border);
         textBtn = tools.toolButton(iconAddress.text_tool,"Write in text box",actionListener);
         textBtn.setBorder(border);
+        eraserBtn = tools.toolButton(iconAddress.eraser_tool,"Use the eraser to clean",actionListener);
+        eraserBtn.setBorder(border);
 
 
 
@@ -488,7 +502,7 @@ public class Client extends UnicastRemoteObject implements IRemoteClient{
         btnList.add(circleBtn);
         btnList.add(triangleBtn);
         btnList.add(textBtn);
-//        btnList.add(eraserBtn);
+        btnList.add(eraserBtn);
 
         // 四个advanced feature的button
         clearBtn = new JButton("New Board");
@@ -676,6 +690,7 @@ public class Client extends UnicastRemoteObject implements IRemoteClient{
                             .addComponent(circleBtn)
                             .addComponent(triangleBtn)
                             .addComponent(textBtn)
+                            .addComponent(eraserBtn)
                     )
                     .addGroup(layout.createParallelGroup(CENTER)
                             .addComponent(canvasUI)
@@ -732,6 +747,7 @@ public class Client extends UnicastRemoteObject implements IRemoteClient{
                                     .addComponent(circleBtn)
                                     .addComponent(triangleBtn)
                                     .addComponent(textBtn)
+                                    .addComponent(eraserBtn)
                             )
                             .addComponent(canvasUI)
                             .addGroup(layout.createSequentialGroup()
@@ -825,11 +841,15 @@ public class Client extends UnicastRemoteObject implements IRemoteClient{
 
 
         if (syncBoard.getState().equals("drawing")) {
+            if (syncBoard.getMode().equals("eraser")) {
+                canvasUI.getGraphic().setPaint(Color.white);
+                canvasUI.getGraphic().setStroke(new BasicStroke(10.0f));
+            }
             mode_shape.makeLine(startPt, syncBoard.getPoint());
             startPoints.put(syncBoard.getName(), syncBoard.getPoint());
             canvasUI.getGraphic().draw(mode_shape.getShape());
             canvasUI.repaint();
-            canvasUI.getGraphic().setPaint(cur_Color);
+//            canvasUI.getGraphic().setPaint(cur_Color);
             return;
         }
 
@@ -848,7 +868,10 @@ public class Client extends UnicastRemoteObject implements IRemoteClient{
                 mode_shape.makeCircle(startPt, syncBoard.getPoint());
             }  else if (syncBoard.getMode().equals("triangle")) {
                 mode_shape.makeTriangle(startPt, syncBoard.getPoint());
-            } else if (syncBoard.getMode().equals("text")) {
+            }else if (syncBoard.getMode().equals("eraser")){
+                mode_shape.eraser(startPt, syncBoard.getPoint());
+                canvasUI.getGraphic().setStroke(new BasicStroke(1.0f));
+            }else if (syncBoard.getMode().equals("text")) {
                 canvasUI.getGraphic().setFont(new Font("TimesRoman", Font.PLAIN, 16));
                 canvasUI.getGraphic().drawString(syncBoard.getText(), syncBoard.getPoint().x, syncBoard.getPoint().y);
             }
@@ -862,8 +885,7 @@ public class Client extends UnicastRemoteObject implements IRemoteClient{
                 try {
                     canvasUI.getGraphic().draw(mode_shape.getShape());
                     canvasUI.repaint();
-                    //once finished drawing remove the start point of client x
-                    startPoints.remove(syncBoard.getName());
+//                    startPoints.remove(syncBoard.getName());
                     return;
                 }catch(Exception e) {
                     e.printStackTrace();
