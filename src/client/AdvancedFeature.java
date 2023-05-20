@@ -41,46 +41,33 @@ public class AdvancedFeature {
     public void open() throws IOException {
 
 
-        // 用户可以打开文件，用于上传的窗口
         FileDialog open_image = new FileDialog(frame, "open image", FileDialog.LOAD);
         open_image.setVisible(true);
         if (open_image.getFile() != null) {
-            //获取file 路径
-            // 获取文件名称
+            //get file path
+            // get file name
             file_Path = open_image.getDirectory();
             file_name = open_image.getFile();
             // open 一个image
-            System.out.println("pic_name:"+file_name);
-            System.out.println("pic_path:"+file_Path);
+//            System.out.println("pic_name:"+file_name);
+//            System.out.println("pic_path:"+file_Path);
             BufferedImage image = ImageIO.read(new File(file_Path + file_name));
-            System.out.println("read image error222");
+//            System.out.println("read image error222");
 
-            //bug 修改
             board.drawImage(image);
             //把image变成byte 然后发送出去给each user
             ByteArrayOutputStream imageArray = new ByteArrayOutputStream();
             //write the image to the imageArray
             ImageIO.write(image, "png", imageArray);
             server.sendOpenBoard(imageArray.toByteArray());
+            board.setFileName(file_name);
+            board.setFilepath(file_Path);
 
         }else{
             System.out.println("Board is empty. Cannot draw image.");
         }
     }
 
-
-
-    public void save() throws IOException {
-        if(file_name == null) {
-            JOptionPane.showMessageDialog(null, "Please saveAs file in PNG type first.");
-        }
-        else {
-            ImageIO.write(board.getCanvas(), "png", new File(file_Path + file_name));
-        }
-    }
-
-
-    // 先另存为，再保存
     public void saveAs() throws IOException {
         FileDialog saveAs_image = new FileDialog(frame, "save as image", FileDialog.SAVE);
         saveAs_image.setVisible(true);
@@ -89,9 +76,38 @@ public class AdvancedFeature {
             this.file_Path = saveAs_image.getDirectory();
             this.file_name = saveAs_image.getFile();
             //保存在这个位置，以png 的格式
-            ImageIO.write(board.getCanvas(), "png", new File(file_Path + file_name));
+            ImageIO.write(board.getCanvas(), "png", new File(file_Path + file_name+".png"));
+            board.setFileName(file_name);
+            board.setFilepath(file_Path);
+            JOptionPane.showMessageDialog(null, "File have been saveAS PNG form successfully!");
         }
     }
+
+
+
+    public void save() throws IOException {
+        board.getCanvas();
+        file_name = board.getFileName();
+        file_Path= board.getFilePath();
+        System.out.println("file name is " + file_name);
+        System.out.println("file path is " + file_Path);
+
+
+        if(file_name == null||file_Path == null) {
+            System.out.println("file is empty now ");
+            JOptionPane.showMessageDialog(null, "Please saveAs file in PNG type first.");
+        }
+        else {
+
+            System.out.println("save the image");
+            ImageIO.write(board.getCanvas(), "png", new File(file_Path + file_name + ".png"));
+            JOptionPane.showMessageDialog(null, "File have been saved successfully!");
+        }
+    }
+
+
+    // 先另存为，再保存
+
 
 
 

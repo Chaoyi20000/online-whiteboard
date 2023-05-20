@@ -29,6 +29,7 @@ public class WhiteBoardArea extends JComponent {
     private String currMode;
     private String text;
     private IRemoteServer server;
+    private String fileName, filepath;
 
 
     public WhiteBoardArea(String name, boolean isManager, IRemoteServer RemoteInterface) {
@@ -220,7 +221,26 @@ public class WhiteBoardArea extends JComponent {
         graph_2.setPaint(Color.white);
         graph_2.fillRect(0,0,700,350);
         graph_2.setPaint(currColor);
+        setFilepath(null);
+        setFileName(null);
         repaint();
+    }
+
+    public String getFileName(){
+        return fileName;
+    }
+
+    public String getFilePath(){
+        return filepath;
+    }
+
+
+    public void setFileName(String fileName){
+        this.fileName=fileName;
+    }
+
+    public void setFilepath(String filepath){
+        this.filepath=filepath;
     }
 
 

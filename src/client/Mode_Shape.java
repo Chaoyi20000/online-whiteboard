@@ -55,14 +55,14 @@ public class Mode_Shape {
     public void makeTriangle( Point start, Point end) {
         //store the start and end x and y
         int minx = Math.min(start.x, end.x);
-        int miny= Math.min(start.y, end.y);
-        int maxx = Math.max(start.x, end.x);
+        int min_y= Math.min(start.y, end.y);
+        int max_x = Math.max(start.x, end.x);
         int maxy= Math.max(start.y, end.y);
-        int [] x = {minx,(minx+maxx)/2,maxx};
-        int [] y = {maxy,miny,maxy};
+        int [] x = {minx,(minx+max_x)/2,max_x};
+        int [] y = {maxy,min_y,maxy};
         shape = new Polygon(x, y, 3);
         if(end.y < start.y) {
-            int [] dy = {miny,maxy,miny};
+            int [] dy = {min_y,maxy,min_y};
             shape = new Polygon(x, dy, 3);
         }
 

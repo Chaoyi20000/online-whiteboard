@@ -316,7 +316,7 @@ public class Client extends UnicastRemoteObject implements IRemoteClient{
     @Override
     public boolean requestPermission(String name) throws IOException {
         if (JOptionPane.showConfirmDialog(frame,
-                name + " wants to join. Do you approve?", "Grant permission",
+                name + " wants to share your whiteboard."+ "Do you approve this user?", "Give a permission",
                 JOptionPane.YES_NO_OPTION,
                 JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
             return true;
