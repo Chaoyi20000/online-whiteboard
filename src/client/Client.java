@@ -148,7 +148,7 @@ public class Client extends UnicastRemoteObject implements IRemoteClient{
             } else if (e.getSource() == purpleBtn) {
                 whiteboardAllUI.setColor(new Color(128, 0, 128));
             } else if (e.getSource() == limeBtn) {
-                whiteboardAllUI.setColor(Color.green);
+                whiteboardAllUI.setColor(new Color(102, 102, 0));
             } else if (e.getSource() == darkgreyBtn) {
                 whiteboardAllUI.setColor(Color.darkGray);
             } else if (e.getSource() == magentaBtn) {
@@ -416,7 +416,7 @@ public class Client extends UnicastRemoteObject implements IRemoteClient{
 //    //// 剩余部分是来写UI board 的部分
     public void drawClientUI(IRemoteServer server) {
 
-        ColorButton colorButton = new ColorButton();
+        Color_Button colorButton = new Color_Button();
 
         //build the GUI
         frame = new JFrame(clientName + "'s WhiteBoard");
@@ -560,7 +560,7 @@ public class Client extends UnicastRemoteObject implements IRemoteClient{
         currUsers = new JScrollPane(list);
         currUsers.setMinimumSize(new Dimension(100, 150));
         if(!isManager) {
-            currUsers.setMinimumSize(new Dimension(100, 290));
+            currUsers.setMinimumSize(new Dimension(100, 300));
         }
         //有问题需要修改
         //manager 可以踢人的功能
@@ -641,7 +641,7 @@ public class Client extends UnicastRemoteObject implements IRemoteClient{
         LayoutManager layoutManager =new LayoutManager(content);
 
         // set the minimum frame size
-        frame.setMinimumSize(new Dimension(820, 600));
+        frame.setMinimumSize(new Dimension(850, 700));
 
         frame.setLocationRelativeTo(null);
         frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
@@ -696,12 +696,15 @@ public class Client extends UnicastRemoteObject implements IRemoteClient{
 
             setHorizontalPart();
             setVerticalPart();
+            blackBtn.setPreferredSize(new Dimension(20, 20));
 
             layout.linkSize(SwingConstants.HORIZONTAL, clearBtn, saveBtn, saveAsBtn, openBtn);
         }
         public void setHorizontalPart() {
             layout.setHorizontalGroup(layout.createSequentialGroup()
-                    .addGroup(layout.createParallelGroup(CENTER)
+
+                    .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
                             .addComponent(drawBtn)
                             .addComponent(lineBtn)
                             .addComponent(ovalBtn)
@@ -711,37 +714,45 @@ public class Client extends UnicastRemoteObject implements IRemoteClient{
                             .addComponent(textBtn)
                             .addComponent(trapezoidBtn)
                             .addComponent(eraserBtn)
-                    )
-                    .addGroup(layout.createParallelGroup(CENTER)
-                            .addComponent(whiteboardAllUI)
-                            .addComponent(msgArea)
-                            .addGroup(layout.createSequentialGroup()
+                            )
+                            .addGroup(layout.createParallelGroup(CENTER)
+                                .addComponent(whiteboardAllUI)
+                                .addComponent(msgArea)
 
+                                .addGroup(layout.createSequentialGroup()
                                     .addComponent(msgText)
                                     .addComponent(sendBtn)
+                                )
                             )
                             .addGroup(layout.createSequentialGroup()
                                     .addComponent(blackBtn)
                                     .addComponent(yellowBtn)
                                     .addComponent(cyanBtn)
-                                    .addComponent(brownBtn)
-                                    .addComponent(greyBtn)
-                                    .addComponent(purpleBtn)
-                                    .addComponent(limeBtn)
-                                    .addComponent(orangeBtn)
-
-
+                                    .addComponent(aoiBtn)
+                                    .addComponent(skyBtn)
+//                                    .addComponent(brownBtn)
+//                                    .addComponent(darkgreyBtn)
+//                                    .addComponent(magentaBtn)
                             )
                             .addGroup(layout.createSequentialGroup()
                                     .addComponent(pinkBtn)
                                     .addComponent(redBtn)
                                     .addComponent(greenBtn)
-                                    .addComponent(blueBtn)
+                                    .addComponent(limeBtn)
+                                    .addComponent(orangeBtn)
+//                                    .addComponent(blueBtn)
+//                                    .addComponent(greyBtn)
+//                                    .addComponent(purpleBtn)
+                            )
+                            .addGroup(layout.createSequentialGroup()
+                                    .addComponent(brownBtn)
                                     .addComponent(darkgreyBtn)
                                     .addComponent(magentaBtn)
-                                    .addComponent(aoiBtn)
-                                    .addComponent(skyBtn)
+                                    .addComponent(blueBtn)
+                                    .addComponent(greyBtn)
+                                    .addComponent(purpleBtn)
                             )
+
 
                     )
                     .addGroup(layout.createParallelGroup(CENTER)
@@ -758,8 +769,8 @@ public class Client extends UnicastRemoteObject implements IRemoteClient{
 
         public void setVerticalPart(){
             layout.setVerticalGroup(layout.createSequentialGroup()
-                    .addGroup(layout.createParallelGroup(BASELINE)
-                            .addGroup(layout.createSequentialGroup()
+                    .addGroup(layout.createSequentialGroup()
+                            .addGroup(layout.createParallelGroup(BASELINE)
                                     .addComponent(drawBtn)
                                     .addComponent(lineBtn)
                                     .addComponent(ovalBtn)
@@ -770,6 +781,8 @@ public class Client extends UnicastRemoteObject implements IRemoteClient{
                                     .addComponent(trapezoidBtn)
                                     .addComponent(eraserBtn)
                             )
+                    )
+                    .addGroup(layout.createParallelGroup(BASELINE)
                             .addComponent(whiteboardAllUI)
                             .addGroup(layout.createSequentialGroup()
                                     .addComponent(clearBtn)
@@ -793,11 +806,13 @@ public class Client extends UnicastRemoteObject implements IRemoteClient{
                                     .addComponent(blackBtn)
                                     .addComponent(yellowBtn)
                                     .addComponent(cyanBtn)
-                                    .addComponent(brownBtn)
-                                    .addComponent(greyBtn)
-                                    .addComponent(purpleBtn)
-                                    .addComponent(limeBtn)
-                                    .addComponent(orangeBtn)
+                                    .addComponent(aoiBtn)
+                                    .addComponent(skyBtn)
+//                                    .addComponent(brownBtn)
+//                                    .addComponent(darkgreyBtn)
+//                                    .addComponent(magentaBtn)
+
+
 
                             )
                             .addGroup(layout.createParallelGroup(BASELINE)
@@ -805,12 +820,23 @@ public class Client extends UnicastRemoteObject implements IRemoteClient{
                                     .addComponent(pinkBtn)
                                     .addComponent(redBtn)
                                     .addComponent(greenBtn)
-                                    .addComponent(blueBtn)
+                                    .addComponent(limeBtn)
+                                    .addComponent(orangeBtn)
+//                                    .addComponent(blueBtn)
+//                                    .addComponent(greyBtn)
+//                                    .addComponent(purpleBtn)
+                            )
+                            .addGroup(layout.createParallelGroup(BASELINE)
+
+                                    .addComponent(brownBtn)
                                     .addComponent(darkgreyBtn)
                                     .addComponent(magentaBtn)
-                                    .addComponent(aoiBtn)
-                                    .addComponent(skyBtn)
-                            )
+                                    .addComponent(blueBtn)
+                                    .addComponent(greyBtn)
+                                    .addComponent(purpleBtn)
+                                    )
+
+
                     )
             );
         }

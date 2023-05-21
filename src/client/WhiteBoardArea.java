@@ -203,6 +203,8 @@ public class WhiteBoardArea extends JComponent {
             //The method for painting the shape on the white board.
         // initialize the white board to synchronize with the manager's image when the client join the shared white board
     protected void paintComponent(Graphics graph) {
+
+
         if (image == null) {
             if (isManager) {
                 image = new BufferedImage(getSize().width, getSize().height, BufferedImage.TYPE_INT_RGB);
@@ -246,8 +248,26 @@ public class WhiteBoardArea extends JComponent {
 
     //make whole white board become empty
     public void reset() {
-        graph_2.setPaint(Color.white);
-        graph_2.fillRect(0,0,700,350);
+        // 绘制网格
+        int gridSize = 20; // 网格的大小（单元格宽度和高度）
+        graph_2.setColor(Color.GRAY); // 网格线的颜色
+
+        // 清空画板并绘制网格
+        graph_2.setColor(Color.WHITE); // 设置画板颜色为白色
+        graph_2.fillRect(0, 0, getWidth(), getHeight()); // 填充整个画板为白色
+
+        // 水平线
+        for (int y = gridSize; y < getHeight(); y += gridSize) {
+            graph_2.setColor(Color.GRAY); // 设置网格线的颜色
+            graph_2.drawLine(0, y, getWidth(), y); // 绘制水平网格线
+        }
+
+        // 垂直线
+        for (int x = gridSize; x < getWidth(); x += gridSize) {
+            graph_2.setColor(Color.GRAY); // 设置网格线的颜色
+            graph_2.drawLine(x, 0, x, getHeight()); // 绘制垂直网格线
+        }
+
         graph_2.setPaint(currColor);
         setFilepath(null);
         setFileName(null);

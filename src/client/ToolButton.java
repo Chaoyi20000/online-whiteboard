@@ -13,9 +13,8 @@ public class ToolButton {
 
         ImageIcon icon = new ImageIcon(iconPath);
         Image image = icon.getImage();
-        // 调整图像大小
+        // change image size
         Image scaledImage = image.getScaledInstance(width, height, Image.SCALE_SMOOTH);
-        // 创建新的图标对象
         Icon scaledIcon = new ImageIcon(scaledImage);
 
         JButton button = new JButton(scaledIcon);
