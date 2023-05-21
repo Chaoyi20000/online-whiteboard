@@ -45,15 +45,21 @@ public class Client extends UnicastRemoteObject implements IRemoteClient{
     private JButton clearBtn, saveBtn, saveAsBtn, openBtn;
     private JButton blackBtn, blueBtn, greenBtn, redBtn, orangeBtn, yellowBtn, cyanBtn,aoiBtn;
     private JButton brownBtn, pinkBtn,skyBtn, greyBtn, purpleBtn, limeBtn, darkgreyBtn, magentaBtn;
+
+    private JButton goldBtn, beigeBtn;
     private JButton drawBtn, lineBtn,ovalBtn, rectBtn, circleBtn, textBtn;
 
-    private JButton triangleBtn, eraserBtn,trapezoidBtn;
+    private JButton triangleBtn,trapezoidBtn;
     private JScrollPane msgArea;
     private JTextArea tellColor, displayColor;
+
+    private JTextArea displayUsers;
     private JList<String> chat;
     private ArrayList<JButton> btnList;
     private WhiteBoardArea whiteboardAllUI;
     private String mode;
+
+    private JLabel manager;
 
     private JTextField msgText;
     private JButton sendBtn;
@@ -149,8 +155,13 @@ public class Client extends UnicastRemoteObject implements IRemoteClient{
                 whiteboardAllUI.setColor(new Color(128, 0, 128));
             } else if (e.getSource() == limeBtn) {
                 whiteboardAllUI.setColor(new Color(102, 102, 0));
+            }  else if (e.getSource() == beigeBtn) {
+                whiteboardAllUI.setColor(new Color(245, 245, 220));
             } else if (e.getSource() == darkgreyBtn) {
                 whiteboardAllUI.setColor(Color.darkGray);
+            } else if (e.getSource() == goldBtn) {
+                whiteboardAllUI.setColor(new Color(184, 134, 11)
+                );
             } else if (e.getSource() == magentaBtn) {
                 whiteboardAllUI.setColor(Color.magenta);
             } else if (e.getSource() == aoiBtn) {
@@ -233,15 +244,6 @@ public class Client extends UnicastRemoteObject implements IRemoteClient{
                         button.setBorder(empty);
                     }
                 }
-            } else if(e.getSource()==eraserBtn){
-                whiteboardAllUI.eraser();
-                for (JButton button : btnList) {
-                    if (button == eraserBtn) {
-                        button.setBorder(box);
-                    } else {
-                        button.setBorder(empty);
-                    }
-                }
             }
 
             // 如果我们换了颜色， 我们display current color也需要换掉
@@ -252,8 +254,8 @@ public class Client extends UnicastRemoteObject implements IRemoteClient{
             mode = whiteboardAllUI.gerCurrMode();
             if (e.getSource() == blackBtn || e.getSource() == blueBtn || e.getSource() == greenBtn ||
                     e.getSource() == redBtn || e.getSource() == orangeBtn || e.getSource() == yellowBtn ||
-                    e.getSource() == cyanBtn || e.getSource() == aoiBtn || e.getSource() == brownBtn ||
-                    e.getSource() == pinkBtn || e.getSource() == skyBtn || e.getSource() == greyBtn ||
+                    e.getSource() == cyanBtn || e.getSource()==beigeBtn || e.getSource() == aoiBtn || e.getSource() == brownBtn ||
+                    e.getSource() == pinkBtn || e.getSource()==goldBtn || e.getSource() == skyBtn || e.getSource() == greyBtn ||
                     e.getSource() == purpleBtn || e.getSource() == limeBtn || e.getSource() == darkgreyBtn ||
                     e.getSource() == magentaBtn) {
                 displayColor.setBackground(whiteboardAllUI.getCurrColor());
@@ -282,9 +284,6 @@ public class Client extends UnicastRemoteObject implements IRemoteClient{
                         break;
                     case"trapezoid":
                         trapezoidBtn.setBorder(tool_border);
-                        break;
-                    case "eraser":
-                        eraserBtn.setBorder(tool_border);
                         break;
                     default :
                         break;
@@ -419,7 +418,7 @@ public class Client extends UnicastRemoteObject implements IRemoteClient{
         Color_Button colorButton = new Color_Button();
 
         //build the GUI
-        frame = new JFrame(clientName + "'s WhiteBoard");
+        frame = new JFrame( clientName +"'s WhiteBoard");
         Container content = frame.getContentPane();
 
         whiteboardAllUI = new WhiteBoardArea(clientName, isManager,server);
@@ -436,6 +435,9 @@ public class Client extends UnicastRemoteObject implements IRemoteClient{
 
         redBtn = colorButton.ColorButton(Color.red);
         redBtn.addActionListener(actionListener);
+
+        goldBtn=colorButton.ColorButton(new Color(184, 134, 11));
+        goldBtn.addActionListener(actionListener);
 
         orangeBtn = colorButton.ColorButton(Color.orange);
         orangeBtn.addActionListener(actionListener);
@@ -463,6 +465,9 @@ public class Client extends UnicastRemoteObject implements IRemoteClient{
 
         darkgreyBtn = colorButton.ColorButton(Color.darkGray);
         darkgreyBtn.addActionListener(actionListener);
+
+        beigeBtn =colorButton.ColorButton(new Color(245, 245, 220));
+        beigeBtn.addActionListener(actionListener);
 
         magentaBtn = colorButton.ColorButton(Color.magenta);
         magentaBtn.addActionListener(actionListener);
@@ -502,8 +507,7 @@ public class Client extends UnicastRemoteObject implements IRemoteClient{
         textBtn.setBorder(border);
         trapezoidBtn=tools.toolButton(iconAddress.trapezoid_tool,"Draw a trapezoid",actionListener);
         trapezoidBtn.setBorder(border);
-        eraserBtn = tools.toolButton(iconAddress.eraser_tool,"Use the eraser to clean",actionListener);
-        eraserBtn.setBorder(border);
+
 
 
 
@@ -517,7 +521,6 @@ public class Client extends UnicastRemoteObject implements IRemoteClient{
         btnList.add(triangleBtn);
         btnList.add(textBtn);
         btnList.add(trapezoidBtn);
-        btnList.add(eraserBtn);
 
         // 四个advanced feature的button
         clearBtn = new JButton("New Board");
@@ -535,10 +538,27 @@ public class Client extends UnicastRemoteObject implements IRemoteClient{
         openBtn.addActionListener(actionListener);
 
         //关于颜色
-        tellColor = new JTextArea("The current color is:");
+        tellColor = new JTextArea("The chosen color is:");
         tellColor.setBackground(new Color(238,238,238));
         displayColor = new JTextArea("");
         displayColor.setBackground(Color.black);
+
+
+        //about user list
+        displayUsers = new JTextArea("Online users :");
+        displayUsers.setBackground(new Color(238,238,238));
+
+
+
+
+
+        //manager pic
+        manager = new JLabel();
+        ImageIcon icon = new ImageIcon(iconAddress.manager);
+        Image image = icon.getImage();
+        Image scaledImage = image.getScaledInstance(100, 100, Image.SCALE_SMOOTH);
+        ImageIcon scaledIcon = new ImageIcon(scaledImage);
+        manager.setIcon(scaledIcon);
 
 
 
@@ -550,6 +570,7 @@ public class Client extends UnicastRemoteObject implements IRemoteClient{
             saveBtn.setVisible(false);
             saveAsBtn.setVisible(false);
             openBtn.setVisible(false);
+            manager.setVisible(false);
         }
 
 
@@ -558,9 +579,9 @@ public class Client extends UnicastRemoteObject implements IRemoteClient{
 
         JList<String> list = new JList<>(userList);
         currUsers = new JScrollPane(list);
-        currUsers.setMinimumSize(new Dimension(100, 150));
+        currUsers.setMinimumSize(new Dimension(90, 140));
         if(!isManager) {
-            currUsers.setMinimumSize(new Dimension(100, 300));
+            currUsers.setMinimumSize(new Dimension(90, 280));
         }
         //有问题需要修改
         //manager 可以踢人的功能
@@ -616,8 +637,9 @@ public class Client extends UnicastRemoteObject implements IRemoteClient{
 
         chat = new JList<>(chatList);
         msgArea = new JScrollPane(chat);
-        msgArea.setMinimumSize(new Dimension(100, 100));
+        msgArea.setMinimumSize(new Dimension(90, 90));
         msgText = new JTextField();
+        msgText.setMinimumSize(new Dimension(50, 50));
         sendBtn = new JButton("Send"); //addMouseListener here 直接call server 去broadcast message
         sendBtn.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent evt) {
@@ -713,7 +735,6 @@ public class Client extends UnicastRemoteObject implements IRemoteClient{
                             .addComponent(triangleBtn)
                             .addComponent(textBtn)
                             .addComponent(trapezoidBtn)
-                            .addComponent(eraserBtn)
                             )
                             .addGroup(layout.createParallelGroup(CENTER)
                                 .addComponent(whiteboardAllUI)
@@ -730,9 +751,8 @@ public class Client extends UnicastRemoteObject implements IRemoteClient{
                                     .addComponent(cyanBtn)
                                     .addComponent(aoiBtn)
                                     .addComponent(skyBtn)
-//                                    .addComponent(brownBtn)
-//                                    .addComponent(darkgreyBtn)
-//                                    .addComponent(magentaBtn)
+                                    .addComponent(beigeBtn)
+
                             )
                             .addGroup(layout.createSequentialGroup()
                                     .addComponent(pinkBtn)
@@ -740,9 +760,8 @@ public class Client extends UnicastRemoteObject implements IRemoteClient{
                                     .addComponent(greenBtn)
                                     .addComponent(limeBtn)
                                     .addComponent(orangeBtn)
-//                                    .addComponent(blueBtn)
-//                                    .addComponent(greyBtn)
-//                                    .addComponent(purpleBtn)
+                                    .addComponent(goldBtn)
+
                             )
                             .addGroup(layout.createSequentialGroup()
                                     .addComponent(brownBtn)
@@ -756,14 +775,24 @@ public class Client extends UnicastRemoteObject implements IRemoteClient{
 
                     )
                     .addGroup(layout.createParallelGroup(CENTER)
-                            .addComponent(clearBtn)
-                            .addComponent(openBtn)
-                            .addComponent(saveBtn)
-                            .addComponent(saveAsBtn)
-                            .addComponent(currUsers)
-                            .addComponent(tellColor)
-                            .addComponent(displayColor)
+                            .addGroup(layout.createParallelGroup(CENTER)
+                                .addComponent(tellColor)
+                                .addComponent(displayColor)
+                                .addComponent(clearBtn)
+                                .addComponent(openBtn)
+                                .addComponent(saveBtn)
+                                .addComponent(saveAsBtn)
+                                .addComponent(displayUsers)
+                                .addComponent(currUsers)
+                            )
+
+//                            .addComponent(manager)
+                            .addGroup(layout.createSequentialGroup()
+                                    .addComponent(manager)
+                            )
+
                     )
+
             );
         }
 
@@ -779,28 +808,36 @@ public class Client extends UnicastRemoteObject implements IRemoteClient{
                                     .addComponent(triangleBtn)
                                     .addComponent(textBtn)
                                     .addComponent(trapezoidBtn)
-                                    .addComponent(eraserBtn)
                             )
                     )
                     .addGroup(layout.createParallelGroup(BASELINE)
                             .addComponent(whiteboardAllUI)
                             .addGroup(layout.createSequentialGroup()
+                                    .addComponent(tellColor)
+                                    .addComponent(displayColor)
                                     .addComponent(clearBtn)
                                     .addComponent(openBtn)
                                     .addComponent(saveBtn)
                                     .addComponent(saveAsBtn)
+                                    .addComponent(displayUsers)
                                     .addComponent(currUsers)
-                                    .addComponent(tellColor)
-                                    .addComponent(displayColor)
                             )
+
                     )
                     .addGroup(layout.createSequentialGroup()
+                            .addGroup(layout.createParallelGroup(BASELINE)
                             .addComponent(msgArea)
+                            .addComponent(manager)
+                            )
                             .addGroup(layout.createParallelGroup()
                                     .addComponent(msgText)
                                     .addComponent(sendBtn)
+
                             )
+
+
                     )
+
                     .addGroup(layout.createSequentialGroup()
                             .addGroup(layout.createParallelGroup(BASELINE)
                                     .addComponent(blackBtn)
@@ -808,11 +845,7 @@ public class Client extends UnicastRemoteObject implements IRemoteClient{
                                     .addComponent(cyanBtn)
                                     .addComponent(aoiBtn)
                                     .addComponent(skyBtn)
-//                                    .addComponent(brownBtn)
-//                                    .addComponent(darkgreyBtn)
-//                                    .addComponent(magentaBtn)
-
-
+                                    .addComponent(beigeBtn)
 
                             )
                             .addGroup(layout.createParallelGroup(BASELINE)
@@ -822,9 +855,8 @@ public class Client extends UnicastRemoteObject implements IRemoteClient{
                                     .addComponent(greenBtn)
                                     .addComponent(limeBtn)
                                     .addComponent(orangeBtn)
-//                                    .addComponent(blueBtn)
-//                                    .addComponent(greyBtn)
-//                                    .addComponent(purpleBtn)
+                                    .addComponent(goldBtn)
+
                             )
                             .addGroup(layout.createParallelGroup(BASELINE)
 
@@ -834,8 +866,11 @@ public class Client extends UnicastRemoteObject implements IRemoteClient{
                                     .addComponent(blueBtn)
                                     .addComponent(greyBtn)
                                     .addComponent(purpleBtn)
-                                    )
+                            )
 
+//                            .addGroup(layout.createParallelGroup(BASELINE)
+//                                    .addComponent(currUsers)
+//                            )
 
                     )
             );
@@ -888,10 +923,6 @@ public class Client extends UnicastRemoteObject implements IRemoteClient{
 
 
         if (syncBoard.getState().equals("drawing")) {
-            if (syncBoard.getMode().equals("eraser")) {
-                whiteboardAllUI.getGraphic().setPaint(Color.white);
-                whiteboardAllUI.getGraphic().setStroke(new BasicStroke(10.0f));
-            }
             mode_shape.makeLine(startPt, syncBoard.getPoint());
             startPoints.put(syncBoard.getName(), syncBoard.getPoint());
             whiteboardAllUI.getGraphic().draw(mode_shape.getShape());
@@ -917,9 +948,6 @@ public class Client extends UnicastRemoteObject implements IRemoteClient{
                 mode_shape.makeTrapezoid(startPt, syncBoard.getPoint());
             } else if (syncBoard.getMode().equals("triangle")) {
                 mode_shape.makeTriangle(startPt, syncBoard.getPoint());
-            }else if (syncBoard.getMode().equals("eraser")){
-                mode_shape.eraser(startPt, syncBoard.getPoint());
-                whiteboardAllUI.getGraphic().setStroke(new BasicStroke(1.0f));
             }else if (syncBoard.getMode().equals("text")) {
                 whiteboardAllUI.getGraphic().setFont(new Font("TimesRoman", Font.PLAIN, 16));
                 whiteboardAllUI.getGraphic().drawString(syncBoard.getText(), syncBoard.getPoint().x, syncBoard.getPoint().y);
@@ -941,15 +969,6 @@ public class Client extends UnicastRemoteObject implements IRemoteClient{
 
         }
     }
-
-
-
-
-
-
-    //几种画画地mode实现 没写完
-    //修改bug这里
-
 
 
 

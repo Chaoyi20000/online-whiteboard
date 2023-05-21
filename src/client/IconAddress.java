@@ -9,7 +9,7 @@ public class IconAddress {
     public static final String rectangle_tool = "/Users/steven/Desktop/eclipse-workspace/WhiteBoard/src/icon/rectangle.png";
     public static final String cicle_tool = "/Users/steven/Desktop/eclipse-workspace/WhiteBoard/src/icon/circle.png";
     public static final String triangle_tool = "/Users/steven/Desktop/eclipse-workspace/WhiteBoard/src/icon/triangle.png";
-    public static final String eraser_tool = "/Users/steven/Desktop/eclipse-workspace/WhiteBoard/src/icon/eraser.png";
+    public static final String manager ="/Users/steven/Desktop/eclipse-workspace/WhiteBoard/src/icon/manager.png";
 
     public static final String trapezoid_tool ="/Users/steven/Desktop/eclipse-workspace/WhiteBoard/src/icon/trapezoid.png";
     public static final String text_tool = "/Users/steven/Desktop/eclipse-workspace/WhiteBoard/src/icon/text_box.png";

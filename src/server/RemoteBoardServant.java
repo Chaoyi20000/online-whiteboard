@@ -66,7 +66,7 @@ public class RemoteBoardServant extends UnicastRemoteObject implements IRemoteSe
 
         // manager with @ symbol
         if(client.getManager()){
-            client.setClientName("$" + client.getClientName());
+            client.setClientName("Manager $" + client.getClientName());
         }
         //add each client to client manager
         adm_client.addClient(client);

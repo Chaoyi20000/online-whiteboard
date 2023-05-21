@@ -55,6 +55,7 @@ public class WhiteBoardArea extends JComponent {
                     Message message = new Message("To start", clientName, currMode, currColor, startPoint, text);
                     server.broadcastBoard(message);
                     System.out.println("current mode " + currMode);
+
                 } catch (RemoteException e1) {
                     e1.printStackTrace();
                 }
@@ -77,18 +78,6 @@ public class WhiteBoardArea extends JComponent {
                             Message message = new Message("drawing", clientName, currMode, currColor, nextPoint, "");
                             server.broadcastBoard(message);
 //                            System.out.println("color is  111 "+currColor);
-
-                        } catch (RemoteException e1) {
-                            e1.printStackTrace();
-                        }
-                    }else if(currMode.compareTo("eraser") == 0){
-                        shape.makeLine(startPoint, nextPoint);
-                        startPoint = nextPoint;
-                        graph_2.setPaint(Color.white);
-                        graph_2.setStroke(new BasicStroke(10.0f));
-                        try {
-                            Message message = new Message("drawing", clientName, currMode, Color.white, nextPoint, "");
-                            server.broadcastBoard(message);
 
                         } catch (RemoteException e1) {
                             e1.printStackTrace();
@@ -122,10 +111,7 @@ public class WhiteBoardArea extends JComponent {
                     }
                     // Display shapes when dragged by local clients, without sending to the server.
 
-//                    graph_2.setPaint(currColor);
-
-
-
+                    graph_2.setPaint(currColor);
 
                     graph_2.draw(shape.getShape());
                     repaint();
@@ -170,32 +156,20 @@ public class WhiteBoardArea extends JComponent {
                         graph_2.drawString(text, nextPoint.x, nextPoint.y);
                         graph_2.setStroke(new BasicStroke(1.0f));
 
-                    }if(currMode.compareTo("eraser")==0) {
-                        try {
-                            Message message = new Message("end drawing", clientName, currMode, Color.white, nextPoint, text);
-                            server.broadcastBoard(message);
-
-                        } catch (RemoteException e1) {
-                            e1.printStackTrace();
-                        }
-                        graph_2.setPaint(Color.white);
-                        graph_2.setStroke(new BasicStroke(1.0f));
-                        repaint();
-                    }else{
-                        try {
-                            Message message = new Message("end drawing", clientName, currMode, currColor, nextPoint, text);
-                            server.broadcastBoard(message);
-
-                        } catch (RemoteException e1) {
-                            System.out.println("End of drawing");
-                        }
-                        graph_2.setPaint(currColor);
-                        repaint();
                     }
+                    try {
+                        Message message = new Message("end drawing", clientName, currMode, currColor, nextPoint, text);
+                        server.broadcastBoard(message);
 
+                    } catch (RemoteException e1) {
+                        System.out.println("End of drawing");
+                    }
+                    graph_2.setPaint(currColor);
+                    repaint();
 
 
                 }
+                repaint();
             }
         });
     }
@@ -228,44 +202,31 @@ public class WhiteBoardArea extends JComponent {
 
 
 
-
-    // 修改完善这里的代码
-
-
-
-
-
-//
-//
-//
-
-
-
     private void draw_prev_image() {
         drawImage(prev_Image);
     }
 
 
-    //make whole white board become empty
+    //make whole white board become empty grid
     public void reset() {
-        // 绘制网格
-        int gridSize = 20; // 网格的大小（单元格宽度和高度）
-        graph_2.setColor(Color.GRAY); // 网格线的颜色
+        // make grid in board
+        int gridSize = 20;
+//        graph_2.setColor(Color.GRAY);
 
-        // 清空画板并绘制网格
-        graph_2.setColor(Color.WHITE); // 设置画板颜色为白色
-        graph_2.fillRect(0, 0, getWidth(), getHeight()); // 填充整个画板为白色
+
+        graph_2.setColor(Color.WHITE);
+        graph_2.fillRect(0, 0, getWidth(), getHeight());
 
         // 水平线
         for (int y = gridSize; y < getHeight(); y += gridSize) {
-            graph_2.setColor(Color.GRAY); // 设置网格线的颜色
-            graph_2.drawLine(0, y, getWidth(), y); // 绘制水平网格线
+            graph_2.setColor(Color.GRAY);
+            graph_2.drawLine(0, y, getWidth(), y);
         }
 
         // 垂直线
         for (int x = gridSize; x < getWidth(); x += gridSize) {
-            graph_2.setColor(Color.GRAY); // 设置网格线的颜色
-            graph_2.drawLine(x, 0, x, getHeight()); // 绘制垂直网格线
+            graph_2.setColor(Color.GRAY);
+            graph_2.drawLine(x, 0, x, getHeight());
         }
 
         graph_2.setPaint(currColor);
@@ -313,9 +274,7 @@ public class WhiteBoardArea extends JComponent {
         currMode = "oval";
     }
 
-    public void eraser(){
-        currMode = "eraser";
-    }
+
 
     public void circle() {
         currMode="circle";

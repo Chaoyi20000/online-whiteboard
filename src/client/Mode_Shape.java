@@ -31,14 +31,6 @@ public class Mode_Shape {
         shape = new Ellipse2D.Double(x, y, width, height);
     }
 
-    public void eraser(Point start, Point end){
-        int x = Math.min(start.x, end.x);
-        int y= Math.min(start.y, end.y);
-        int width = Math.abs(start.x - end.x);
-        int height = Math.abs(start.y - end.y);
-        shape = new Rectangle2D.Double(x, y, width, height);
-    }
-
     public void makeTrapezoid(Point start, Point end){
         int x1 = start.x;
         int y1 = start.y;
