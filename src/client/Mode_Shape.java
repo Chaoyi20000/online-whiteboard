@@ -39,6 +39,22 @@ public class Mode_Shape {
         shape = new Rectangle2D.Double(x, y, width, height);
     }
 
+    public void makeTrapezoid(Point start, Point end){
+        int x1 = start.x;
+        int y1 = start.y;
+        int x2 = end.x;
+        int y2 = start.y;
+        int x3 = end.x - (end.x - start.x) / 4;
+        int y3 = end.y;
+        int x4 = start.x + (end.x - start.x) / 4;
+        int y4 = end.y;
+
+        int[] xPoints = {x1, x2, x3, x4};
+        int[] yPoints = {y1, y2, y3, y4};
+        shape = new Polygon(xPoints, yPoints, 4);
+
+    }
+
 
     //draw Rectangle
     public void makeRect( Point start, Point end) {

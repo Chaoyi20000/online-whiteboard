@@ -106,6 +106,9 @@ public class WhiteBoardArea extends JComponent {
                     } else if (currMode.compareTo("circle") == 0) {
                         draw_prev_image();
                         shape.makeCircle( startPoint, nextPoint);
+                    } else if(currMode.compareTo("trapezoid") == 0){
+                        draw_prev_image();
+                        shape.makeTrapezoid( startPoint, nextPoint);
                     } else if (currMode.compareTo("triangle") == 0) {
                         draw_prev_image();
                         shape.makeTriangle(startPoint, nextPoint);
@@ -154,6 +157,9 @@ public class WhiteBoardArea extends JComponent {
 
                     } else if (currMode.compareTo("triangle") == 0) {
                         shape.makeTriangle(startPoint, nextPoint);
+
+                    } else if(currMode.compareTo("trapezoid") == 0){
+                        shape.makeTrapezoid( startPoint, nextPoint);
 
                     } else if (currMode.compareTo("text") == 0) {
                         text = JOptionPane.showInputDialog("What text you want to add?");
@@ -274,6 +280,10 @@ public class WhiteBoardArea extends JComponent {
 
     public void line() {
         currMode = "line";
+    }
+
+    public void trapezoid(){
+        currMode = "trapezoid";
     }
 
     public void rect() {
