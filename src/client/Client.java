@@ -52,7 +52,7 @@ public class Client extends UnicastRemoteObject implements IRemoteClient{
     private JTextArea tellColor, displayColor;
     private JList<String> chat;
     private ArrayList<JButton> btnList;
-    private WhiteBoardArea canvasUI;
+    private WhiteBoardArea whiteboardAllUI;
     private String mode;
 
     private JTextField msgText;
@@ -89,12 +89,12 @@ public class Client extends UnicastRemoteObject implements IRemoteClient{
             // the chosen mode will be boxed with black border
             LineBorder empty = new LineBorder(new Color(238, 238, 238), 1);
             LineBorder box = new LineBorder(Color.black, 1);
-            AdvancedFeature advancedFeature = new AdvancedFeature(frame, canvasUI,server);
+            AdvancedFeature advancedFeature = new AdvancedFeature(frame, whiteboardAllUI,server);
 
 
             // 四个基础按键操作
             if (e.getSource() == clearBtn) {
-                canvasUI.reset();
+                whiteboardAllUI.reset();
                 //如果你是manager,你要清空所有人画板
                 //需要修改 修改
                 if (isManager) {
@@ -126,39 +126,39 @@ public class Client extends UnicastRemoteObject implements IRemoteClient{
             }
 
             else if (e.getSource() == blackBtn) {
-                canvasUI.setColor(Color.black);
+                whiteboardAllUI.setColor(Color.black);
             } else if (e.getSource() == blueBtn) {
-                canvasUI.setColor(Color.blue);
+                whiteboardAllUI.setColor(Color.blue);
             } else if (e.getSource() == greenBtn) {
-                canvasUI.setColor(Color.green);
+                whiteboardAllUI.setColor(Color.green);
             } else if (e.getSource() == redBtn) {
-                canvasUI.setColor(Color.red);
+                whiteboardAllUI.setColor(Color.red);
             } else if (e.getSource() == orangeBtn) {
-                canvasUI.setColor(Color.orange);
+                whiteboardAllUI.setColor(Color.orange);
             } else if (e.getSource() == yellowBtn) {
-                canvasUI.setColor(Color.yellow);
+                whiteboardAllUI.setColor(Color.yellow);
             } else if (e.getSource() == cyanBtn) {
-                canvasUI.setColor(Color.cyan);
+                whiteboardAllUI.setColor(Color.cyan);
             } else if (e.getSource() == brownBtn) {
-                canvasUI.setColor(new Color(165, 42, 42));
+                whiteboardAllUI.setColor(new Color(165, 42, 42));
             } else if (e.getSource() == pinkBtn) {
-                canvasUI.setColor(Color.pink);
+                whiteboardAllUI.setColor(Color.pink);
             } else if (e.getSource() == greyBtn) {
-                canvasUI.setColor(Color.gray);
+                whiteboardAllUI.setColor(Color.gray);
             } else if (e.getSource() == purpleBtn) {
-                canvasUI.setColor(new Color(128, 0, 128));
+                whiteboardAllUI.setColor(new Color(128, 0, 128));
             } else if (e.getSource() == limeBtn) {
-                canvasUI.setColor(Color.green);
+                whiteboardAllUI.setColor(Color.green);
             } else if (e.getSource() == darkgreyBtn) {
-                canvasUI.setColor(Color.darkGray);
+                whiteboardAllUI.setColor(Color.darkGray);
             } else if (e.getSource() == magentaBtn) {
-                canvasUI.setColor(Color.magenta);
+                whiteboardAllUI.setColor(Color.magenta);
             } else if (e.getSource() == aoiBtn) {
-                canvasUI.setColor(new Color(0, 128, 128));
+                whiteboardAllUI.setColor(new Color(0, 128, 128));
             } else if (e.getSource() == skyBtn) {
-                canvasUI.setColor(new Color(135, 206, 235));
+                whiteboardAllUI.setColor(new Color(135, 206, 235));
             } else if (e.getSource() == drawBtn) {
-                canvasUI.draw();
+                whiteboardAllUI.draw();
                 for (JButton button : btnList) {
                     if (button == drawBtn) {
                         button.setBorder(box);
@@ -171,7 +171,7 @@ public class Client extends UnicastRemoteObject implements IRemoteClient{
 
             //不同形状的graph
             else if (e.getSource() == lineBtn) {
-                canvasUI.line();
+                whiteboardAllUI.line();
                 for (JButton button : btnList) {
                     if (button == lineBtn) {
                         button.setBorder(box);
@@ -180,7 +180,7 @@ public class Client extends UnicastRemoteObject implements IRemoteClient{
                     }
                 }
             }else if(e.getSource()==ovalBtn){
-                canvasUI.oval();
+                whiteboardAllUI.oval();
                 for (JButton button : btnList) {
                     if (button == ovalBtn) {
                         button.setBorder(box);
@@ -189,7 +189,7 @@ public class Client extends UnicastRemoteObject implements IRemoteClient{
                     }
                 }
             }else if (e.getSource() == rectBtn) {
-                canvasUI.rect();
+                whiteboardAllUI.rect();
                 for (JButton button : btnList) {
                     if (button == rectBtn) {
                         button.setBorder(box);
@@ -198,7 +198,7 @@ public class Client extends UnicastRemoteObject implements IRemoteClient{
                     }
                 }
             } else if (e.getSource() == circleBtn) {
-                canvasUI.circle();
+                whiteboardAllUI.circle();
                 for (JButton button : btnList) {
                     if (button == circleBtn) {
                         button.setBorder(box);
@@ -207,7 +207,7 @@ public class Client extends UnicastRemoteObject implements IRemoteClient{
                     }
                 }
             } else if (e.getSource() == triangleBtn) {
-                canvasUI.triangle();
+                whiteboardAllUI.triangle();
                 for (JButton button : btnList) {
                     if (button == triangleBtn) {
                         button.setBorder(box);
@@ -216,7 +216,7 @@ public class Client extends UnicastRemoteObject implements IRemoteClient{
                     }
                 }
             } else if (e.getSource() == textBtn) {
-                canvasUI.text();
+                whiteboardAllUI.text();
                 for (JButton button : btnList) {
                     if (button == textBtn) {
                         button.setBorder(box);
@@ -225,7 +225,7 @@ public class Client extends UnicastRemoteObject implements IRemoteClient{
                     }
                 }
             }else if (e.getSource() == trapezoidBtn) {
-                canvasUI.trapezoid();
+                whiteboardAllUI.trapezoid();
                 for (JButton button : btnList) {
                     if (button == trapezoidBtn) {
                         button.setBorder(box);
@@ -234,7 +234,7 @@ public class Client extends UnicastRemoteObject implements IRemoteClient{
                     }
                 }
             } else if(e.getSource()==eraserBtn){
-                canvasUI.eraser();
+                whiteboardAllUI.eraser();
                 for (JButton button : btnList) {
                     if (button == eraserBtn) {
                         button.setBorder(box);
@@ -248,15 +248,15 @@ public class Client extends UnicastRemoteObject implements IRemoteClient{
 
             //颜色需要修改，还不够
 
-//            cur_Color = canvasUI.getCurrColor();
-            mode = canvasUI.gerCurrMode();
+//            cur_Color = whiteboardAllUI.getCurrColor();
+            mode = whiteboardAllUI.gerCurrMode();
             if (e.getSource() == blackBtn || e.getSource() == blueBtn || e.getSource() == greenBtn ||
                     e.getSource() == redBtn || e.getSource() == orangeBtn || e.getSource() == yellowBtn ||
                     e.getSource() == cyanBtn || e.getSource() == aoiBtn || e.getSource() == brownBtn ||
                     e.getSource() == pinkBtn || e.getSource() == skyBtn || e.getSource() == greyBtn ||
                     e.getSource() == purpleBtn || e.getSource() == limeBtn || e.getSource() == darkgreyBtn ||
                     e.getSource() == magentaBtn) {
-                displayColor.setBackground(canvasUI.getCurrColor());
+                displayColor.setBackground(whiteboardAllUI.getCurrColor());
                 LineBorder tool_border = new LineBorder(Color.black, 1);
                 switch (mode) {
                     case "draw":
@@ -321,7 +321,7 @@ public class Client extends UnicastRemoteObject implements IRemoteClient{
     @Override
     public void clearBoard() throws RemoteException {
         if (isManager == false) {
-            this.canvasUI.reset();
+            this.whiteboardAllUI.reset();
         }
 
     }
@@ -331,7 +331,7 @@ public class Client extends UnicastRemoteObject implements IRemoteClient{
         //把image变成byte 然后发送出去给each user
         ByteArrayOutputStream imageArray = new ByteArrayOutputStream();
         //write the image to the imageArray
-        ImageIO.write(this.canvasUI.getCanvas(), "png", imageArray);
+        ImageIO.write(this.whiteboardAllUI.getCanvas(), "png", imageArray);
         return imageArray.toByteArray();
     }
 
@@ -339,7 +339,7 @@ public class Client extends UnicastRemoteObject implements IRemoteClient{
     public void drawOpenBoard(byte[] targetBoard) throws IOException {
         System.out.println("error in drawOpenBoard111");
         BufferedImage image = ImageIO.read(new ByteArrayInputStream(targetBoard));
-        this.canvasUI.drawImage(image);
+        this.whiteboardAllUI.drawImage(image);
         System.out.println("error in drawOpenBoard2222");
 
     }
@@ -422,7 +422,7 @@ public class Client extends UnicastRemoteObject implements IRemoteClient{
         frame = new JFrame(clientName + "'s WhiteBoard");
         Container content = frame.getContentPane();
 
-        canvasUI = new WhiteBoardArea(clientName, isManager,server);
+        whiteboardAllUI = new WhiteBoardArea(clientName, isManager,server);
 
         //关于颜色的button
         blackBtn = colorButton.ColorButton(Color.black);
@@ -713,7 +713,7 @@ public class Client extends UnicastRemoteObject implements IRemoteClient{
                             .addComponent(eraserBtn)
                     )
                     .addGroup(layout.createParallelGroup(CENTER)
-                            .addComponent(canvasUI)
+                            .addComponent(whiteboardAllUI)
                             .addComponent(msgArea)
                             .addGroup(layout.createSequentialGroup()
 
@@ -770,7 +770,7 @@ public class Client extends UnicastRemoteObject implements IRemoteClient{
                                     .addComponent(trapezoidBtn)
                                     .addComponent(eraserBtn)
                             )
-                            .addComponent(canvasUI)
+                            .addComponent(whiteboardAllUI)
                             .addGroup(layout.createSequentialGroup()
                                     .addComponent(clearBtn)
                                     .addComponent(openBtn)
@@ -856,21 +856,21 @@ public class Client extends UnicastRemoteObject implements IRemoteClient{
         Point startPt = (Point)startPoints.get(syncBoard.getName());
 
         //set canvas stroke color
-        canvasUI.getGraphic().setPaint(syncBoard.getColor());
-        cur_Color = canvasUI.getCurrColor();
+        whiteboardAllUI.getGraphic().setPaint(syncBoard.getColor());
+        cur_Color = whiteboardAllUI.getCurrColor();
 
 
 
         if (syncBoard.getState().equals("drawing")) {
             if (syncBoard.getMode().equals("eraser")) {
-                canvasUI.getGraphic().setPaint(Color.white);
-                canvasUI.getGraphic().setStroke(new BasicStroke(10.0f));
+                whiteboardAllUI.getGraphic().setPaint(Color.white);
+                whiteboardAllUI.getGraphic().setStroke(new BasicStroke(10.0f));
             }
             mode_shape.makeLine(startPt, syncBoard.getPoint());
             startPoints.put(syncBoard.getName(), syncBoard.getPoint());
-            canvasUI.getGraphic().draw(mode_shape.getShape());
-            canvasUI.repaint();
-//            canvasUI.getGraphic().setPaint(cur_Color);
+            whiteboardAllUI.getGraphic().draw(mode_shape.getShape());
+            whiteboardAllUI.repaint();
+//            whiteboardAllUI.getGraphic().setPaint(cur_Color);
             return;
         }
 
@@ -893,24 +893,24 @@ public class Client extends UnicastRemoteObject implements IRemoteClient{
                 mode_shape.makeTriangle(startPt, syncBoard.getPoint());
             }else if (syncBoard.getMode().equals("eraser")){
                 mode_shape.eraser(startPt, syncBoard.getPoint());
-                canvasUI.getGraphic().setStroke(new BasicStroke(1.0f));
+                whiteboardAllUI.getGraphic().setStroke(new BasicStroke(1.0f));
             }else if (syncBoard.getMode().equals("text")) {
-                canvasUI.getGraphic().setFont(new Font("TimesRoman", Font.PLAIN, 16));
-                canvasUI.getGraphic().drawString(syncBoard.getText(), syncBoard.getPoint().x, syncBoard.getPoint().y);
+                whiteboardAllUI.getGraphic().setFont(new Font("TimesRoman", Font.PLAIN, 16));
+                whiteboardAllUI.getGraphic().drawString(syncBoard.getText(), syncBoard.getPoint().x, syncBoard.getPoint().y);
             }
 
 //            //draw shape if in shape mode: triangle, circle, rectangle
             if (!syncBoard.getMode().equals("text")) {
                 try {
-                    canvasUI.getGraphic().draw(mode_shape.getShape());
-                    canvasUI.repaint();
+                    whiteboardAllUI.getGraphic().draw(mode_shape.getShape());
+                    whiteboardAllUI.repaint();
 //                    startPoints.remove(syncBoard.getName());
                     return;
                 }catch(Exception e) {
                     e.printStackTrace();
                 }
             }
-            canvasUI.repaint();
+            whiteboardAllUI.repaint();
             startPoints.remove(syncBoard.getName());
 
         }
