@@ -312,7 +312,7 @@ public class Client extends UnicastRemoteObject implements IRemoteClient{
     }
 
     @Override
-    public boolean getManager() throws RemoteException {
+    public boolean CheckManager() throws RemoteException {
         return this.isManager;
     }
 

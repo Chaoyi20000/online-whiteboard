@@ -44,7 +44,7 @@ public class RemoteBoardServant extends UnicastRemoteObject implements IRemoteSe
         boolean permission = true;
         // allow the client to join
         for(IRemoteClient iterator: this.adm_client){
-            if(iterator.getManager()){
+            if(iterator.CheckManager()){
                 try{
                     permission=iterator.requestPermission(client.getClientName());
                 } catch (IOException e) {
@@ -65,7 +65,7 @@ public class RemoteBoardServant extends UnicastRemoteObject implements IRemoteSe
         }
 
         // manager with @ symbol
-        if(client.getManager()){
+        if(client.CheckManager()){
             client.setClientName("Manager $" + client.getClientName());
         }
         //add each client to client manager
@@ -105,7 +105,7 @@ public class RemoteBoardServant extends UnicastRemoteObject implements IRemoteSe
     public byte[] sendCurrentBoard() throws IOException {
         byte[] currentBoard = null;
         for(IRemoteClient iterator: adm_client){
-            if(iterator.getManager()){
+            if(iterator.CheckManager()){
                 currentBoard = iterator.sendBoard();
             }
 
@@ -119,7 +119,7 @@ public class RemoteBoardServant extends UnicastRemoteObject implements IRemoteSe
     @Override
     public void sendOpenBoard(byte[] targetBoard) throws IOException {
         for(IRemoteClient iterator: adm_client) {
-            if(!iterator.getManager()){
+            if(!iterator.CheckManager()){
                 iterator.drawOpenBoard(targetBoard);
             }
         }

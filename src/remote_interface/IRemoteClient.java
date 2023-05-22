@@ -27,7 +27,7 @@ public interface IRemoteClient extends Remote {
 // assign a client manager to manage all the client
     public void ToBeClientManager() throws RemoteException;
 // get this manager
-    public boolean getManager() throws RemoteException;
+    public boolean CheckManager() throws RemoteException;
 
 // clear the current board
     public void clearBoard() throws RemoteException;
