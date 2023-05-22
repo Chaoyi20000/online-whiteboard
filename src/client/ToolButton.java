@@ -21,9 +21,7 @@ public class ToolButton {
         button.setToolTipText(tooltip);
         button.addActionListener(actionListener);
 
-
-
-
+        
         return button;
     }
 }

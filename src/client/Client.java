@@ -36,19 +36,18 @@ import static javax.swing.GroupLayout.Alignment.CENTER;
 //要分区 除了白板以外的部分
 public class Client extends UnicastRemoteObject implements IRemoteClient{
     private static final long serialVersionUID = 1L;
-    static IRemoteServer server;
-    private boolean isManager; //true if is manager
-    private boolean havePermission; //permission granted by manager
     private JFrame frame;
+    static IRemoteServer server;
+    private boolean isManager;
+
     private DefaultListModel<String> userList;
     private DefaultListModel<String> chatList;
     private JButton clearBtn, saveBtn, saveAsBtn, openBtn;
-    private JButton blackBtn, blueBtn, greenBtn, redBtn, orangeBtn, yellowBtn, cyanBtn,aoiBtn;
-    private JButton brownBtn, pinkBtn,skyBtn, greyBtn, purpleBtn, limeBtn, darkgreyBtn, magentaBtn;
-
-    private JButton goldBtn, beigeBtn;
+    private JButton blackBtn, blueBtn, yellowBtn, cyanBtn,aoiBtn,limeBtn, darkgreyBtn;
+    private JButton brownBtn, pinkBtn,skyBtn, greyBtn, purpleBtn, magentaBtn;
+    private JButton goldBtn, beigeBtn,greenBtn, redBtn, orangeBtn;
     private JButton drawBtn, lineBtn,ovalBtn, rectBtn, circleBtn, textBtn;
-
+    private boolean havePermission;
     private JButton triangleBtn,trapezoidBtn;
     private JScrollPane msgArea;
     private JTextArea tellColor, displayColor;
@@ -307,7 +306,7 @@ public class Client extends UnicastRemoteObject implements IRemoteClient{
     }
 
     @Override
-    public void assignClientManager() throws RemoteException {
+    public void ToBeClientManager() throws RemoteException {
         this.isManager = true;
 
     }
@@ -413,7 +412,7 @@ public class Client extends UnicastRemoteObject implements IRemoteClient{
 
 //
 //    //// 剩余部分是来写UI board 的部分
-    public void drawClientUI(IRemoteServer server) {
+    public void drawUI(IRemoteServer server) {
 
         Color_Button colorButton = new Color_Button();
 
@@ -604,7 +603,7 @@ public class Client extends UnicastRemoteObject implements IRemoteClient{
                                         ///////////////////bug
                                         server.RemoveTargetUser(selectedName);
                                         System.out.println("remove select user" + selectedName);
-                                        updateClientList(server.getClientList());
+                                        updateClientList(server.getUserList());
 //                                        System.out.println(server.getClientList());
                                     } catch (IOException e) {
                                         // TODO Auto-generated catch block
@@ -694,7 +693,7 @@ public class Client extends UnicastRemoteObject implements IRemoteClient{
                             JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
                         try {
                             server.RemoveSelf(clientName);
-                            updateClientList(server.getClientList());
+                            updateClientList(server.getUserList());
                         } catch (RemoteException e) {
                             JOptionPane.showMessageDialog(null, "Canvas server is down, please save and exit.");
                         } finally {
@@ -1009,7 +1008,7 @@ public class Client extends UnicastRemoteObject implements IRemoteClient{
                 }else {
                     validName = true;
                 }
-                for(IRemoteClient c : server.getClientList()) {
+                for(IRemoteClient c : server.getUserList()) {
                     if(client_name.equals(c.getClientName()) || c.getClientName().equals("*"+client_name)) {
                         validName = false;
                         JOptionPane.showMessageDialog(null, "The name is taken, think a different name!");
@@ -1030,7 +1029,7 @@ public class Client extends UnicastRemoteObject implements IRemoteClient{
 
 
 
-            client.drawClientUI(server);
+            client.drawUI(server);
             //dont have permission access
             if(!(client.getPermission())) {
                 server.RemoveTargetUser(client.getClientName());

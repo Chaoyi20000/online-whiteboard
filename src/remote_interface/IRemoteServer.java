@@ -16,7 +16,7 @@ public interface IRemoteServer extends Remote{
 //登陆的client给register
 	public void register(IRemoteClient client) throws RemoteException;
 //	获取client list and unique
-	public Set<IRemoteClient> getClientList() throws RemoteException;
+	public Set<IRemoteClient> getUserList() throws RemoteException;
 
 
 //广播每一个whiteboard

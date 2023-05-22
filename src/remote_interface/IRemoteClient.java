@@ -12,20 +12,20 @@ import java.util.Set;
 //The methods defined by the interface are called by the client and allow the server side to perform the corresponding operations
 public interface IRemoteClient extends Remote {
 
+    //Getter
+    public String getClientName() throws RemoteException;
+    //Setter
+    public void setClientName(String name) throws RemoteException;
+
 // draw the UI of Client side
-    public void drawClientUI(IRemoteServer server) throws RemoteException;
+    public void drawUI(IRemoteServer server) throws RemoteException;
 //// update the user list in UI
     public void updateClientList(Set<IRemoteClient> clientSet) throws RemoteException;
 // synchronize the whiteboard
     public void synchronizeBoard (IRemoteWhiteBoard syncBoard) throws RemoteException;
 
-//Getter
-    public String getClientName() throws RemoteException;
-//Setter
-    public void setClientName(String name) throws RemoteException;
-
 // assign a client manager to manage all the client
-    public void assignClientManager() throws RemoteException;
+    public void ToBeClientManager() throws RemoteException;
 // get this manager
     public boolean getManager() throws RemoteException;
 

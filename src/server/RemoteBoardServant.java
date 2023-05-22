@@ -39,7 +39,7 @@ public class RemoteBoardServant extends UnicastRemoteObject implements IRemoteSe
 //        Permission permissions = new Permission();
          // first join user is client manager
         if(this.adm_client.isEmpty()){
-            client.assignClientManager();
+            client.ToBeClientManager();
         }
         boolean permission = true;
         // allow the client to join
@@ -73,13 +73,13 @@ public class RemoteBoardServant extends UnicastRemoteObject implements IRemoteSe
 
         // update list from Client Manager
         for(IRemoteClient c: adm_client){
-            c.updateClientList(getClientList());
+            c.updateClientList(getUserList());
         }
 
     }
 
     @Override
-    public Set<IRemoteClient> getClientList() throws RemoteException {
+    public Set<IRemoteClient> getUserList() throws RemoteException {
         return this.adm_client.getClientSet();
     }
 
@@ -135,7 +135,7 @@ public class RemoteBoardServant extends UnicastRemoteObject implements IRemoteSe
                 System.out.println("The user " + name +" leave the board" );
             }
         }for(IRemoteClient iterator: adm_client){
-            iterator.updateClientList(getClientList());
+            iterator.updateClientList(getUserList());
         }
     }
 
@@ -156,7 +156,7 @@ public class RemoteBoardServant extends UnicastRemoteObject implements IRemoteSe
                 }
             }
         }for(IRemoteClient iterator: adm_client){
-            iterator.updateClientList(getClientList());
+            iterator.updateClientList(getUserList());
         }
 
 
