@@ -6,11 +6,16 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.stream.Stream;
 
 
 public class ClientManager implements Iterable<IRemoteClient>{
 
     private Set<IRemoteClient> clientSet;
+
+    public Stream<IRemoteClient> stream() {
+        return clientSet.stream();
+    }
     ConcurrentHashMap<IRemoteClient, Boolean> clientMap= new ConcurrentHashMap<>();
     private boolean havePermission;
 

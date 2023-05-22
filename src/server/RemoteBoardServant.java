@@ -9,6 +9,7 @@ import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.Objects;
 import java.util.Set;
+import java.util.stream.Stream;
 
 //Servant receives requests from clients, processes them and sends back responses
 //在 RemoteBoardServant 构造函数中创建了一个 ClientManager 实例，用于管理客户端。
@@ -42,29 +43,27 @@ public class RemoteBoardServant extends UnicastRemoteObject implements IRemoteSe
             client.ToBeClientManager();
         }
         boolean permission = true;
-        // allow the client to join
-        for(IRemoteClient iterator: this.adm_client){
-            if(iterator.CheckManager()){
-                try{
-                    permission=iterator.requestPermission(client.getClientName());
+
+        for (IRemoteClient iterator : adm_client) {
+            if (iterator.CheckManager()) {
+                try {
+                    permission = iterator.requestPermission(client.getClientName());
                 } catch (IOException e) {
-//改写这里error handle
                     System.out.println("Error about I/O: " + e.getMessage());
+                    permission = true;
                 }
+                break;
             }
         }
-
-
         if(!permission ){
             try{
-                client.setPermission(permission);
+                client.setPermission(false);
             } catch (IOException e) {
                 //改写这里error handle
                 System.out.println("Error about I/O: " + e.getMessage());
             }
         }
 
-        // manager with @ symbol
         if(client.CheckManager()){
             client.setClientName("Manager $" + client.getClientName());
         }
@@ -72,9 +71,13 @@ public class RemoteBoardServant extends UnicastRemoteObject implements IRemoteSe
         adm_client.addClient(client);
 
         // update list from Client Manager
-        for(IRemoteClient c: adm_client){
-            c.updateCurrentUserList(getUserList());
-        }
+        adm_client.forEach(c -> {
+            try {
+                c.updateCurrentUserList(getUserList());
+            } catch (RemoteException e) {
+                throw new RuntimeException(e);
+            }
+        });
 
     }
 

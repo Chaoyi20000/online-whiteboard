@@ -4,6 +4,7 @@ package client;
 import remote_interface.IRemoteClient;
 import remote_interface.IRemoteServer;
 import remote_interface.IRemoteWhiteBoard;
+import server.ClientManager;
 
 
 import java.awt.*;
@@ -785,7 +786,6 @@ public class Client extends UnicastRemoteObject implements IRemoteClient{
                                 .addComponent(currUsers)
                             )
 
-//                            .addComponent(manager)
                             .addGroup(layout.createSequentialGroup()
                                     .addComponent(manager)
                             )
@@ -906,7 +906,6 @@ public class Client extends UnicastRemoteObject implements IRemoteClient{
 
 
         if (syncBoard.WhiteBoardState().equals("To start")) {
-            //Let startPoint stores the start point of client x and wait for the next draw action
             startPoints.put(syncBoard.WhiteBoardName(), syncBoard.WhiteBoardPoint());
             return;
         }
@@ -1001,16 +1000,16 @@ public class Client extends UnicastRemoteObject implements IRemoteClient{
             boolean validName = false;
             String client_name = "";
             while(!validName) {
-                client_name = JOptionPane.showInputDialog("Please type in your name:");
+                client_name = JOptionPane.showInputDialog("Please input in your name:");
                 if(client_name.equals("")) {
-                    JOptionPane.showMessageDialog(null, "Please enter a name!");
+                    JOptionPane.showMessageDialog(null, "Please enter a user name!");
                 }else {
                     validName = true;
                 }
                 for(IRemoteClient c : server.getUserList()) {
                     if(client_name.equals(c.getClientName()) || c.getClientName().equals("*"+client_name)) {
                         validName = false;
-                        JOptionPane.showMessageDialog(null, "The name is taken, think a different name!");
+                        JOptionPane.showMessageDialog(null, "The name is taken by others, input a different name please!");
                     }
                 }
             }
