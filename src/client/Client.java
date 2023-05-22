@@ -900,31 +900,31 @@ public class Client extends UnicastRemoteObject implements IRemoteClient{
     public void synchronizeBoard(IRemoteWhiteBoard syncBoard) throws RemoteException {
 
         // skip syncboard from itself
-        if (syncBoard.getName().compareTo(clientName) == 0) {
+        if (syncBoard.WhiteBoardName().compareTo(clientName) == 0) {
             return ;
         }
 
         Mode_Shape mode_shape = new Mode_Shape();
 
 
-        if (syncBoard.getState().equals("To start")) {
+        if (syncBoard.WhiteBoardState().equals("To start")) {
             //Let startPoint stores the start point of client x and wait for the next draw action
-            startPoints.put(syncBoard.getName(), syncBoard.getPoint());
+            startPoints.put(syncBoard.WhiteBoardName(), syncBoard.WhiteBoardPoint());
             return;
         }
 
         //start from the start point of client x
-        Point startPt = (Point)startPoints.get(syncBoard.getName());
+        Point startPt = (Point)startPoints.get(syncBoard.WhiteBoardName());
 
         //set canvas stroke color
-        whiteboardAllUI.getGraphic().setPaint(syncBoard.getColor());
+        whiteboardAllUI.getGraphic().setPaint(syncBoard.WhiteBoardColor());
         cur_Color = whiteboardAllUI.getCurrColor();
 
 
 
-        if (syncBoard.getState().equals("drawing")) {
-            mode_shape.makeLine(startPt, syncBoard.getPoint());
-            startPoints.put(syncBoard.getName(), syncBoard.getPoint());
+        if (syncBoard.WhiteBoardState().equals("drawing")) {
+            mode_shape.makeLine(startPt, syncBoard.WhiteBoardPoint());
+            startPoints.put(syncBoard.WhiteBoardName(), syncBoard.WhiteBoardPoint());
             whiteboardAllUI.getGraphic().draw(mode_shape.getShape());
             whiteboardAllUI.repaint();
 //            whiteboardAllUI.getGraphic().setPaint(cur_Color);
@@ -934,27 +934,27 @@ public class Client extends UnicastRemoteObject implements IRemoteClient{
 
 //        the mouse is released so we draw from start point to the broadcast point
 
-        if (syncBoard.getState().equals("end drawing")) {
-            if (syncBoard.getMode().equals("draw") || syncBoard.getMode().equals("line")) {
-                mode_shape.makeLine(startPt, syncBoard.getPoint());
+        if (syncBoard.WhiteBoardState().equals("end drawing")) {
+            if (syncBoard.WhiteBoardMode().equals("draw") || syncBoard.WhiteBoardMode().equals("line")) {
+                mode_shape.makeLine(startPt, syncBoard.WhiteBoardPoint());
                 System.out.println("sync successful on draw");
-            }else if(syncBoard.getMode().equals("oval")){
-                mode_shape.makeOval(startPt, syncBoard.getPoint());
-            } else if (syncBoard.getMode().equals("rectangle")) {
-                mode_shape.makeRect(startPt, syncBoard.getPoint());
-            } else if (syncBoard.getMode().equals("circle")) {
-                mode_shape.makeCircle(startPt, syncBoard.getPoint());
-            } else if(syncBoard.getMode().equals("trapezoid")){
-                mode_shape.makeTrapezoid(startPt, syncBoard.getPoint());
-            } else if (syncBoard.getMode().equals("triangle")) {
-                mode_shape.makeTriangle(startPt, syncBoard.getPoint());
-            }else if (syncBoard.getMode().equals("text")) {
+            }else if(syncBoard.WhiteBoardMode().equals("oval")){
+                mode_shape.makeOval(startPt, syncBoard.WhiteBoardPoint());
+            } else if (syncBoard.WhiteBoardMode().equals("rectangle")) {
+                mode_shape.makeRect(startPt, syncBoard.WhiteBoardPoint());
+            } else if (syncBoard.WhiteBoardMode().equals("circle")) {
+                mode_shape.makeCircle(startPt, syncBoard.WhiteBoardPoint());
+            } else if(syncBoard.WhiteBoardMode().equals("trapezoid")){
+                mode_shape.makeTrapezoid(startPt, syncBoard.WhiteBoardPoint());
+            } else if (syncBoard.WhiteBoardMode().equals("triangle")) {
+                mode_shape.makeTriangle(startPt, syncBoard.WhiteBoardPoint());
+            }else if (syncBoard.WhiteBoardMode().equals("text")) {
                 whiteboardAllUI.getGraphic().setFont(new Font("TimesRoman", Font.PLAIN, 16));
-                whiteboardAllUI.getGraphic().drawString(syncBoard.getText(), syncBoard.getPoint().x, syncBoard.getPoint().y);
+                whiteboardAllUI.getGraphic().drawString(syncBoard.WhiteboardText(), syncBoard.WhiteBoardPoint().x, syncBoard.WhiteBoardPoint().y);
             }
 
 //            //draw shape if in shape mode: triangle, circle, rectangle
-            if (!syncBoard.getMode().equals("text")) {
+            if (!syncBoard.WhiteBoardMode().equals("text")) {
                 try {
                     whiteboardAllUI.getGraphic().draw(mode_shape.getShape());
                     whiteboardAllUI.repaint();
@@ -965,7 +965,7 @@ public class Client extends UnicastRemoteObject implements IRemoteClient{
                 }
             }
             whiteboardAllUI.repaint();
-            startPoints.remove(syncBoard.getName());
+            startPoints.remove(syncBoard.WhiteBoardName());
 
         }
     }

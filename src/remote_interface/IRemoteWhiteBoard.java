@@ -6,12 +6,12 @@ import java.rmi.RemoteException;
 
 public interface IRemoteWhiteBoard extends Remote {
 
-    public String getName() throws RemoteException;
-    public String getText() throws RemoteException;
-    public String getMode() throws RemoteException;
-    public Color getColor() throws RemoteException;
-    public Point getPoint() throws RemoteException;
-    public String getState() throws RemoteException;
+    public String WhiteBoardName() throws RemoteException;
+    public String WhiteboardText() throws RemoteException;
+    public String WhiteBoardMode() throws RemoteException;
+    public Color WhiteBoardColor() throws RemoteException;
+    public Point WhiteBoardPoint() throws RemoteException;
+    public String WhiteBoardState() throws RemoteException;
 
 
 }

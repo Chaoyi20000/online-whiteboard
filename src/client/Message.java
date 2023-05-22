@@ -25,33 +25,34 @@ public class Message extends UnicastRemoteObject implements IRemoteWhiteBoard {
     }
 
     @Override
-    public String getName() throws RemoteException {
+    public String WhiteBoardName() throws RemoteException {
         return this.clientName;
     }
 
     @Override
-    public String getMode() throws RemoteException {
-        return this.mode;
-    }
-
-    @Override
-    public String getText() throws RemoteException {
+    public String WhiteboardText() throws RemoteException {
         System.out.println("text is "+this.text);
         return this.text;
     }
 
     @Override
-    public String getState() throws RemoteException {
-        return this.drawState;
+    public String WhiteBoardMode() throws RemoteException {
+        return this.mode;
     }
 
     @Override
-    public Color getColor() throws RemoteException {
+    public Color WhiteBoardColor() throws RemoteException {
         return this.color;
     }
 
     @Override
-    public Point getPoint() throws RemoteException {
+    public Point WhiteBoardPoint() throws RemoteException {
         return this.point;
     }
+    @Override
+    public String WhiteBoardState() throws RemoteException {
+        return this.drawState;
+    }
+
+
 }
