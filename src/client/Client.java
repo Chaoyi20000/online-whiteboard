@@ -1015,6 +1015,7 @@ public class Client extends UnicastRemoteObject implements IRemoteClient{
             }
             client.setClientName(client_name);
             try {
+
                 server.register(client);
                 System.out.println("Registered with remote sever");
 
