@@ -603,7 +603,7 @@ public class Client extends UnicastRemoteObject implements IRemoteClient{
                                         ///////////////////bug
                                         server.RemoveTargetUser(selectedName);
                                         System.out.println("remove select user" + selectedName);
-                                        updateClientList(server.getUserList());
+                                        updateCurrentUserList(server.getUserList());
 //                                        System.out.println(server.getClientList());
                                     } catch (IOException e) {
                                         // TODO Auto-generated catch block
@@ -693,7 +693,7 @@ public class Client extends UnicastRemoteObject implements IRemoteClient{
                             JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
                         try {
                             server.RemoveSelf(clientName);
-                            updateClientList(server.getUserList());
+                            updateCurrentUserList(server.getUserList());
                         } catch (RemoteException e) {
                             JOptionPane.showMessageDialog(null, "Canvas server is down, please save and exit.");
                         } finally {
@@ -877,14 +877,13 @@ public class Client extends UnicastRemoteObject implements IRemoteClient{
     }
 
     @Override
-    public void updateClientList(Set<IRemoteClient> clientSet) throws RemoteException {
+    public void updateCurrentUserList(Set<IRemoteClient> clientSet) throws RemoteException {
         //更新之前，先清空被地地user list
         this.userList.removeAllElements();
         for(IRemoteClient c: clientSet) {
             try {
                 userList.addElement(c.getClientName());
-                System.out.println("The new client is :");
-                System.out.println(c.getClientName());
+                System.out.println("The new join user is :" + c.getClientName());
             } catch (RemoteException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();

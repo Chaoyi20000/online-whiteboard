@@ -73,7 +73,7 @@ public class RemoteBoardServant extends UnicastRemoteObject implements IRemoteSe
 
         // update list from Client Manager
         for(IRemoteClient c: adm_client){
-            c.updateClientList(getUserList());
+            c.updateCurrentUserList(getUserList());
         }
 
     }
@@ -135,7 +135,7 @@ public class RemoteBoardServant extends UnicastRemoteObject implements IRemoteSe
                 System.out.println("The user " + name +" leave the board" );
             }
         }for(IRemoteClient iterator: adm_client){
-            iterator.updateClientList(getUserList());
+            iterator.updateCurrentUserList(getUserList());
         }
     }
 
@@ -156,7 +156,7 @@ public class RemoteBoardServant extends UnicastRemoteObject implements IRemoteSe
                 }
             }
         }for(IRemoteClient iterator: adm_client){
-            iterator.updateClientList(getUserList());
+            iterator.updateCurrentUserList(getUserList());
         }
 
 

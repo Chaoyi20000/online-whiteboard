@@ -19,8 +19,8 @@ public interface IRemoteClient extends Remote {
 
 // draw the UI of Client side
     public void drawUI(IRemoteServer server) throws RemoteException;
-//// update the user list in UI
-    public void updateClientList(Set<IRemoteClient> clientSet) throws RemoteException;
+//// update the current user list in UI
+    public void updateCurrentUserList(Set<IRemoteClient> clientSet) throws RemoteException;
 // synchronize the whiteboard
     public void synchronizeBoard (IRemoteWhiteBoard syncBoard) throws RemoteException;
 
