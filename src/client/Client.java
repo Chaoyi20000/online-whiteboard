@@ -522,10 +522,9 @@ public class Client extends UnicastRemoteObject implements IRemoteClient{
         btnList.add(textBtn);
         btnList.add(trapezoidBtn);
 
-        // 四个advanced feature的button
+        // four advanced feature的button
         clearBtn = new JButton("New Board");
         clearBtn.setToolTipText("Create a new board");
-        //这样点击之后才能注册
         clearBtn.addActionListener(actionListener);
         saveBtn = new JButton("Save Image");
         saveBtn.setToolTipText("Save as image file");
@@ -537,7 +536,7 @@ public class Client extends UnicastRemoteObject implements IRemoteClient{
         openBtn.setToolTipText("Open an image file");
         openBtn.addActionListener(actionListener);
 
-        //关于颜色
+        //about UI display current colour
         tellColor = new JTextArea("The chosen color is:");
         tellColor.setBackground(new Color(238,238,238));
         displayColor = new JTextArea("");
@@ -563,8 +562,8 @@ public class Client extends UnicastRemoteObject implements IRemoteClient{
 
 
 
-        //manager advanced 控制 btn
-        // if the client is the manager, he can save, open and clear the white board image
+        //manager advanced  control button
+
         if (isManager == false) {
             clearBtn.setVisible(false);
             saveBtn.setVisible(false);
@@ -574,8 +573,7 @@ public class Client extends UnicastRemoteObject implements IRemoteClient{
         }
 
 
-        ////////////////////修改
-        //list all other user
+        // get all the users
 
         JList<String> list = new JList<>(userList);
         currUsers = new JScrollPane(list);
@@ -583,8 +581,7 @@ public class Client extends UnicastRemoteObject implements IRemoteClient{
         if(!isManager) {
             currUsers.setMinimumSize(new Dimension(90, 280));
         }
-        //有问题需要修改
-        //manager 可以踢人的功能
+        //manager can kick someone here
         // if the client is the manager, he has the right to remove the client
         if (isManager) {
             list.addMouseListener(new MouseAdapter() {
@@ -910,10 +907,8 @@ public class Client extends UnicastRemoteObject implements IRemoteClient{
             return;
         }
 
-        //start from the start point of client x
         Point startPt = (Point)startPoints.get(syncBoard.WhiteBoardName());
 
-        //set canvas stroke color
         whiteboardAllUI.getGraphic().setPaint(syncBoard.WhiteBoardColor());
         cur_Color = whiteboardAllUI.getCurrColor();
 
@@ -929,7 +924,6 @@ public class Client extends UnicastRemoteObject implements IRemoteClient{
         }
 
 
-//        the mouse is released so we draw from start point to the broadcast point
 
         if (syncBoard.WhiteBoardState().equals("end drawing")) {
             if (syncBoard.WhiteBoardMode().equals("draw") || syncBoard.WhiteBoardMode().equals("line")) {
@@ -974,42 +968,44 @@ public class Client extends UnicastRemoteObject implements IRemoteClient{
         public static void main(String[] args) throws RemoteException, MalformedURLException, NotBoundException, ServerNotActiveException {
 
 
-//        if(args.length != 2) {
-//            throw new IllegalArgumentException("Need exactly two arguments.");
-//        }
+        if(args.length != 2) {
+            System.out.println("We need two args here");
+            return;
+        }
 
         try {
 
-//            if(!(args[0].equals("localhost") || args[0].equals("127.0.0.1"))) {
-//                System.err.println("Please enter localhost or 127.0.0.1");
-//                return;
-//            }
-//            String serverAddress = "//" + args[0]+":"+args[1] + "/WhiteBoardServer";
+            if(!(args[0].equals("localhost") || args[0].equals("127.0.0.1"))) {
+                System.out.println("Please enter localhost or 127.0.0.1 here");
+                return;
+            }
+            String serverAddress = "//" + args[0]+":"+args[1] + "/WhiteBoard";
 
 
-            String hostname = "localhost";
-            String port = "8888";
-            String serverAddress ="//" + hostname+":"+port+ "/WhiteBoard";
+//            String hostname = "localhost";
+//            String port = "8888";
+//            String serverAddress ="//" + hostname+":"+port+ "/WhiteBoard";
 
-            //Look up the Canvas Server from the RMI name registry
+            //Look up the Server from the RMI registry
             server = (IRemoteServer) Naming.lookup(serverAddress);
             IRemoteClient client = new Client();
-//            IClientManager clientManager =new ClientManager(this);
 
-            //show user register GUI and register the user name to server
-            boolean validName = false;
             String client_name = "";
+
+
+            boolean validName = false;
+
             while(!validName) {
-                client_name = JOptionPane.showInputDialog("Please input in your name:");
+                client_name = JOptionPane.showInputDialog("Please input your name:");
                 if(client_name.equals("")) {
-                    JOptionPane.showMessageDialog(null, "Please enter a user name!");
+                    JOptionPane.showMessageDialog(null, "Please enter your name!");
                 }else {
                     validName = true;
                 }
                 for(IRemoteClient c : server.getUserList()) {
                     if(client_name.equals(c.getClientName()) || c.getClientName().equals("*"+client_name)) {
                         validName = false;
-                        JOptionPane.showMessageDialog(null, "The name is taken by others, input a different name please!");
+                        JOptionPane.showMessageDialog(null, "The name is taken by other users, input a different name please!");
                     }
                 }
             }
@@ -1017,27 +1013,27 @@ public class Client extends UnicastRemoteObject implements IRemoteClient{
             try {
 
                 server.register(client);
-                System.out.println("Registered with remote sever");
 
             } catch(RemoteException e) {
-                System.err.println("Error registering with remote server");
+                System.err.println("Error registering with the remote server");
+            }catch (Exception e){
+                System.out.println("error in register part");
             }
-
-            //修改的。。。
-//            Permission permission = new Permission();
 
 
 
             client.drawUI(server);
-            //dont have permission access
             if(!(client.getPermission())) {
                 server.RemoveTargetUser(client.getClientName());
             }
         } catch(ConnectException e) {
-            System.err.println("Server is down or wrong IP address or Port number.");
-        } catch(Exception e) {
-            System.err.println("Please enter Valid IP and Port number sss.");
-            e.printStackTrace();
+            System.err.println("Server has connection error or wrong IP address or Port number.");
+        }catch (NotBoundException e) {
+            System.err.println("Remote object not found in the registry");
+        } catch (MalformedURLException  e) {
+            System.err.println("Malformed URL for server address is invalid");
+        }catch(Exception e) {
+            System.err.println("Please enter Valid IP and Port number.");
         }
 
     }
