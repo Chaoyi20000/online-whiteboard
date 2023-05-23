@@ -982,10 +982,6 @@ public class Client extends UnicastRemoteObject implements IRemoteClient{
             String serverAddress = "//" + args[0]+":"+args[1] + "/WhiteBoard";
 
 
-//            String hostname = "localhost";
-//            String port = "8888";
-//            String serverAddress ="//" + hostname+":"+port+ "/WhiteBoard";
-
             //Look up the Server from the RMI registry
             server = (IRemoteServer) Naming.lookup(serverAddress);
             IRemoteClient client = new Client();
